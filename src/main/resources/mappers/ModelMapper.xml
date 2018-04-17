@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.ModelMapper" >
+  <resultMap id="BaseResultMap" type="com.mmall.pojo.Model" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="model_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="row_node_num" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cloumn_node_num" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="row_fixed_distance" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cloumn_fixed_distance" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="row_my_distance" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cloumn_my_distance" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="node_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="line_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="station_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="deep" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="body_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="drawing" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="drawing_file_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, model_name, row_node_num, cloumn_node_num, row_fixed_distance, cloumn_fixed_distance, 
+    row_my_distance, cloumn_my_distance, node_num, line_num, station_id, deep, body_num, 
+    drawing, drawing_file_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from jdw_model
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultType="com.mmall.pojo.Model">
+    select
+    <include refid="Base_Column_List" />
+    from jdw_model
+    order by id DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from jdw_model
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.pojo.Model" >
+    insert into jdw_model (id, code, model_name, 
+      row_node_num, cloumn_node_num, row_fixed_distance, 
+      cloumn_fixed_distance, row_my_distance, cloumn_my_distance, 
+      node_num, line_num, station_id, 
+      deep, body_num, drawing, 
+      drawing_file_name)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, 
+      #{rowNodeNum,jdbcType=VARCHAR}, #{cloumnNodeNum,jdbcType=VARCHAR}, #{rowFixedDistance,jdbcType=VARCHAR}, 
+      #{cloumnFixedDistance,jdbcType=VARCHAR}, #{rowMyDistance,jdbcType=VARCHAR}, #{cloumnMyDistance,jdbcType=VARCHAR}, 
+      #{nodeNum,jdbcType=INTEGER}, #{lineNum,jdbcType=INTEGER}, #{stationId,jdbcType=INTEGER}, 
+      #{deep,jdbcType=REAL}, #{bodyNum,jdbcType=INTEGER}, #{drawing,jdbcType=VARCHAR}, 
+      #{drawingFileName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.pojo.Model" >
+    insert into jdw_model
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="modelName != null" >
+        model_name,
+      </if>
+      <if test="rowNodeNum != null" >
+        row_node_num,
+      </if>
+      <if test="cloumnNodeNum != null" >
+        cloumn_node_num,
+      </if>
+      <if test="rowFixedDistance != null" >
+        row_fixed_distance,
+      </if>
+      <if test="cloumnFixedDistance != null" >
+        cloumn_fixed_distance,
+      </if>
+      <if test="rowMyDistance != null" >
+        row_my_distance,
+      </if>
+      <if test="cloumnMyDistance != null" >
+        cloumn_my_distance,
+      </if>
+      <if test="nodeNum != null" >
+        node_num,
+      </if>
+      <if test="lineNum != null" >
+        line_num,
+      </if>
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="deep != null" >
+        deep,
+      </if>
+      <if test="bodyNum != null" >
+        body_num,
+      </if>
+      <if test="drawing != null" >
+        drawing,
+      </if>
+      <if test="drawingFileName != null" >
+        drawing_file_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="rowNodeNum != null" >
+        #{rowNodeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cloumnNodeNum != null" >
+        #{cloumnNodeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rowFixedDistance != null" >
+        #{rowFixedDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="cloumnFixedDistance != null" >
+        #{cloumnFixedDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="rowMyDistance != null" >
+        #{rowMyDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="cloumnMyDistance != null" >
+        #{cloumnMyDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeNum != null" >
+        #{nodeNum,jdbcType=INTEGER},
+      </if>
+      <if test="lineNum != null" >
+        #{lineNum,jdbcType=INTEGER},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=INTEGER},
+      </if>
+      <if test="deep != null" >
+        #{deep,jdbcType=REAL},
+      </if>
+      <if test="bodyNum != null" >
+        #{bodyNum,jdbcType=INTEGER},
+      </if>
+      <if test="drawing != null" >
+        #{drawing,jdbcType=VARCHAR},
+      </if>
+      <if test="drawingFileName != null" >
+        #{drawingFileName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.Model" >
+    update jdw_model
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        model_name = #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="rowNodeNum != null" >
+        row_node_num = #{rowNodeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cloumnNodeNum != null" >
+        cloumn_node_num = #{cloumnNodeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rowFixedDistance != null" >
+        row_fixed_distance = #{rowFixedDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="cloumnFixedDistance != null" >
+        cloumn_fixed_distance = #{cloumnFixedDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="rowMyDistance != null" >
+        row_my_distance = #{rowMyDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="cloumnMyDistance != null" >
+        cloumn_my_distance = #{cloumnMyDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeNum != null" >
+        node_num = #{nodeNum,jdbcType=INTEGER},
+      </if>
+      <if test="lineNum != null" >
+        line_num = #{lineNum,jdbcType=INTEGER},
+      </if>
+      <if test="stationId != null" >
+        station_id = #{stationId,jdbcType=INTEGER},
+      </if>
+      <if test="deep != null" >
+        deep = #{deep,jdbcType=REAL},
+      </if>
+      <if test="bodyNum != null" >
+        body_num = #{bodyNum,jdbcType=INTEGER},
+      </if>
+      <if test="drawing != null" >
+        drawing = #{drawing,jdbcType=VARCHAR},
+      </if>
+      <if test="drawingFileName != null" >
+        drawing_file_name = #{drawingFileName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Model" >
+    update jdw_model
+    set code = #{code,jdbcType=VARCHAR},
+      model_name = #{modelName,jdbcType=VARCHAR},
+      row_node_num = #{rowNodeNum,jdbcType=VARCHAR},
+      cloumn_node_num = #{cloumnNodeNum,jdbcType=VARCHAR},
+      row_fixed_distance = #{rowFixedDistance,jdbcType=VARCHAR},
+      cloumn_fixed_distance = #{cloumnFixedDistance,jdbcType=VARCHAR},
+      row_my_distance = #{rowMyDistance,jdbcType=VARCHAR},
+      cloumn_my_distance = #{cloumnMyDistance,jdbcType=VARCHAR},
+      node_num = #{nodeNum,jdbcType=INTEGER},
+      line_num = #{lineNum,jdbcType=INTEGER},
+      station_id = #{stationId,jdbcType=INTEGER},
+      deep = #{deep,jdbcType=REAL},
+      body_num = #{bodyNum,jdbcType=INTEGER},
+      drawing = #{drawing,jdbcType=VARCHAR},
+      drawing_file_name = #{drawingFileName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

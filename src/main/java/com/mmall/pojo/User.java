@@ -13,27 +13,24 @@ public class User {
 
     private String phone;
 
-    private String question;
-
-    private String answer;
-
     private Integer role;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public User(Integer id, String username, String password, String email, String phone, String question, String answer, Integer role, Date createTime, Date updateTime) {
+    private Integer officeId;
+
+    public User(Integer id, String username, String password, String email, String phone, Integer role, Date createTime, Date updateTime, Integer officeId) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.question = question;
-        this.answer = answer;
         this.role = role;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.officeId = officeId;
     }
 
     public User() {
@@ -80,22 +77,6 @@ public class User {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question == null ? null : question.trim();
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer == null ? null : answer.trim();
-    }
-
     public Integer getRole() {
         return role;
     }
@@ -118,5 +99,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(Integer officeId) {
+        this.officeId = officeId;
     }
 }
