@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,7 +93,7 @@ public class StationController {
         }
     }
 
-    @RequestMapping("upload.do")
+    @RequestMapping(value = "upload.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -102,7 +103,7 @@ public class StationController {
 //        if (iUserService.checkAdminRole(user).isSuccess()) {
         String path = request.getSession().getServletContext().getRealPath("/upload");
         String targetFileName = iFileService.upload(file, path);
-        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/upload/" + targetFileName;
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/JDW/upload/" + targetFileName;
         Map fileMap = Maps.newHashMap();
         fileMap.put("uri", targetFileName);//存返回的文件名
         fileMap.put("url", url);

@@ -94,7 +94,7 @@ public class CheckerController {
                 if (checker.getOffice() == office) {
                     return iCheckerService.deleteChecker(checkerId);
                 }else {
-                    return ServerResponse.createByErrorMessage("非本单位变电站不能删除");
+                    return ServerResponse.createByErrorMessage("非本单位检测员不能删除");
 
                 }
             }
