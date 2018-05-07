@@ -29,6 +29,11 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+    <!-- 配置SpringMVC的视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/html/"/>
+        <property name="suffix" value=".html"/>
+    </bean>
 
 
 

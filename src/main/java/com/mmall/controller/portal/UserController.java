@@ -37,7 +37,7 @@ public class UserController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "login.do", method = RequestMethod.POST)
+    @RequestMapping(value = "login.do")
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session) {
         ServerResponse<User> response = iUserService.login(username, password);
@@ -48,20 +48,20 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "logout.do", method = RequestMethod.POST)
+    @RequestMapping(value = "logout.do")
     @ResponseBody
     public ServerResponse<String> logout(HttpSession session) {
         session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
 
-    @RequestMapping(value = "register.do", method = RequestMethod.POST)
+    @RequestMapping(value = "register.do")
     @ResponseBody
     public ServerResponse<String> register(User user) {
         return iUserService.register(user);
     }
 
-    @RequestMapping(value = "setadmin.do", method = RequestMethod.POST)
+    @RequestMapping(value = "setadmin.do")
     @ResponseBody
     public ServerResponse<String> setadmin(Integer userid,HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -74,14 +74,14 @@ public class UserController {
         return iUserService.setadmin(userid);
     }
 
-    @RequestMapping(value = "check_valid.do", method = RequestMethod.POST)
+    @RequestMapping(value = "check_valid.do")
     @ResponseBody
     public ServerResponse<String> checkValid(String str, String type) {
         return iUserService.checkValid(str, type);
     }
 
 
-    @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
+    @RequestMapping(value = "get_user_info.do")
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -91,7 +91,7 @@ public class UserController {
         return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
     }
 
-    @RequestMapping(value = "delete.do", method = RequestMethod.DELETE)
+    @RequestMapping(value = "delete.do")
     @ResponseBody
     public ServerResponse<String> deleteUser(HttpSession session, Integer userId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -125,7 +125,7 @@ public class UserController {
     }
 */
 
-    @RequestMapping(value = "reset_password.do", method = RequestMethod.POST)
+    @RequestMapping(value = "reset_password.do")
     @ResponseBody
     public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -138,7 +138,7 @@ public class UserController {
         return iUserService.resetPassword(passwordOld, passwordNew, user);
     }
 
-    @RequestMapping(value = "reset_pass_ad.do", method = RequestMethod.POST)
+    @RequestMapping(value = "reset_pass_ad.do")
     @ResponseBody
     public ServerResponse<String> resetPassword_ad(HttpSession session, String passwordNew, Integer userId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -156,7 +156,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "update_information.do", method = RequestMethod.POST)
+    @RequestMapping(value = "update_information.do")
     @ResponseBody
     public ServerResponse<User> update_information(HttpSession session, User user) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
@@ -171,14 +171,15 @@ public class UserController {
             response=  iUserService.updateInformation(user);
         }
         else{
-           User oldUser = iUserService.getInformation(user.getId()).getData();
+           User oldUser = iUserService.getInformation(currentUser.getId()).getData();
+            user.setId(currentUser.getId());
            user.setOfficeId(oldUser.getOfficeId());
             response= iUserService.updateInformation(user);
         }
         return response;
     }
 
-    @RequestMapping(value = "get_information.do", method = RequestMethod.POST)
+    @RequestMapping(value = "get_information.do")
     @ResponseBody
     public ServerResponse<User> get_information(HttpSession session) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);

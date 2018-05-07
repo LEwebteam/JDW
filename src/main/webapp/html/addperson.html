@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../css/common/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/common/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="../css/common/jquery.datetimepicker.css" />
+		<link rel="stylesheet" href="../css/common/reset.css" />
+		<link rel="stylesheet" href="../css/editperson.css" />
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery.datetimepicker.js" ></script>
+		<script type="text/javascript" src="../js/jquery.validate.js" ></script>
+	</head>
+	<body>
+		<div class="content">
+			<div class="content-title">
+				<h3>添加检测人员</h3>
+				<a href="#" onclick="window.location.reload()" class="refresh"><img src="../img/refresh.png">刷新</a>
+				<a href="#" onclick="history.back(-1)" class="goback"><img src="../img/back.png">上一页</a>
+			</div>
+			<form action="peoplemanage.html" method="get">
+			<div class="infor-edit-content">
+				<table>
+					<tr>
+						<td colspan="1" >性别</td>
+						<td colspan="1" ><select name="">
+							<option value="0">男</option>
+							<option value="1">女</option>
+						</select></td>
+						<td colspan="1" >职级</td>
+						<td colspan="1" ><select name="">
+							<option>1</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td colspan="1">姓名</td>
+						<td colspan="1"><input type="text" name=""></td>
+						<td colspan="1">联系电话</td>
+						<td colspan="1"><input type="text" name=""></td>
+					</tr>
+					<tr>
+						<td colspan="1">所属单位</td>
+						<td colspan="3"><select name="">
+							<option value="">沙坪坝</option>
+						</select></td>
+					</tr>
+				</table>
+				<div class="infor-edit-button">
+				<input type="submit" value="确定">
+				<input type="reset" value="重置">
+			</div>
+			</form>
+			</div>
+		</div>
+	</body>
+</html>

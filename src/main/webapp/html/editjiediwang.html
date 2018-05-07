@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="../css/common/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/common/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="../css/common/jquery.datetimepicker.css" />
+		<link rel="stylesheet" href="../css/common/reset.css" />
+		<link rel="stylesheet" href="../css/editjiediwang.css" />
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery.datetimepicker.js" ></script>
+		<script type="text/javascript" src="../js/jquery.validate.js" ></script>
+	</head>
+	<body>
+		<div class="content">
+			<div class="content-title">
+				<h3>接地网信息编辑</h3>
+				<a href="#" onclick="window.location.reload()" class="refresh"><img src="../img/refresh.png">刷新</a>
+				<a href="#" onclick="history.back(-1)" class="goback"><img src="../img/back.png">上一页</a>
+			</div>
+			<form action="jiediwangmanage.html" method="get">
+			<div class="infor-edit-content">
+				<table>
+					<tr>
+						<td colspan="1" width="80px">接地网埋设深度</td>
+						<td colspan="1" width="160px"><input type="text" name="" value="沙坪坝站"></td>
+						<td colspan="1" width="80px">接地网支路数</td>
+						<td colspan="1" width="160px"><input type="text" name="" value="234.5"></td>
+					</tr>
+					<tr>
+						<td colspan="1">接地网节点数</td>
+						<td colspan="1"><input type="text" name="" value="23"></td>
+						<td colspan="1">接地网上引接地体数</td>
+						<td colspan="1"><input type="text" name="" value="2"></td>
+					</tr>
+					<tr>
+						<td colspan="1">接地网拓扑图纸</td>
+						<td colspan="3"><input type="file"></td>
+					</tr>
+					<tr>
+						<td colspan="1">备注</td>
+						<td colspan="3">
+							<textarea>没有</textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="infor-edit-button">
+				<input type="submit" value="确定">
+				<input type="button" value="返回" onclick="history.back(-1)">
+			</div>
+			</form>
+		</div>
+	</body>
+</html>

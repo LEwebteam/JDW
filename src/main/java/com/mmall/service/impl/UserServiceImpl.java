@@ -9,9 +9,11 @@ import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.schema.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.util.ElementScanner6;
 import java.util.List;
 
 /**
@@ -183,8 +185,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse<String> deleteUser(Integer userId) {
-        userMapper.deleteByPrimaryKey(userId);
+        int count = userMapper.deleteByPrimaryKey(userId);
+        if(count>=1)
         return ServerResponse.createBySuccessMessage("删除成功");
+        else
+            return ServerResponse.createByErrorMessage("删除失败");
     }
 
     @Override
@@ -215,6 +220,7 @@ public class UserServiceImpl implements IUserService {
         updateUser.setAnswer(user.getAnswer());*/
 
         int updateCount = userMapper.updateByPrimaryKeySelective(updateUser);
+        updateUser = userMapper.selectByPrimaryKey(updateUser.getId());
         if (updateCount > 0) {
             return ServerResponse.createBySuccess("更新个人信息成功", updateUser);
         }

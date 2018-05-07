@@ -18,6 +18,7 @@ public interface StationMapper {
     int updateByPrimaryKeySelective(Station record);
 
     int updateByPrimaryKey(Station record);
+
     List<Station> selectByOfficeId(Integer officeId);
 
     List<Station> select(@Param("stationName") String stationName, @Param("stationId") Integer stationId, @Param("stationType") String stationType, @Param("stationLevel") String stationLevel, @Param("office") Integer office, @Param("startTime") Date startTime, @Param("endTime") Date endTime);

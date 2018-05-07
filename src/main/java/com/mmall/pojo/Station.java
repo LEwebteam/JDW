@@ -33,7 +33,9 @@ public class Station {
 
     private Date updateDatetime;
 
-    public Station(Integer id, Integer code, String name, Date buildTime, String location, String level, Float area, String type, String darwing, String drawingFileName, Integer office, String createBy, Date createDatetime, String updateBy, Date updateDatetime) {
+    private Float deep;
+
+    public Station(Integer id, Integer code, String name, Date buildTime, String location, String level, Float area, String type, String darwing, String drawingFileName, Integer office, String createBy, Date createDatetime, String updateBy, Date updateDatetime, Float deep) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -49,6 +51,7 @@ public class Station {
         this.createDatetime = createDatetime;
         this.updateBy = updateBy;
         this.updateDatetime = updateDatetime;
+        this.deep = deep;
     }
 
     public Station() {
@@ -173,5 +176,13 @@ public class Station {
 
     public void setUpdateDatetime(Date updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public Float getDeep() {
+        return deep;
+    }
+
+    public void setDeep(Float deep) {
+        this.deep = deep;
     }
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../css/common/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/common/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="../css/common/jquery.datetimepicker.css" />
+		<link rel="stylesheet" href="../css/common/reset.css" />
+		<link rel="stylesheet" href="../css/historyinfor.css" />
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery.datetimepicker.js" ></script>
+		<script type="text/javascript" src="../js/jquery.validate.js" ></script>
+	</head>
+	<body>
+		<div class="content">
+			<div class="content-title">
+				<h3>历史检测信息</h3>
+				<a href="#" onclick="window.location.reload()" class="refresh"><img src="../img/refresh.png">刷新</a>
+				<a href="#" onclick="history.back(-1)" class="goback"><img src="../img/back.png">上一页</a>
+			</div>
+		<div class="search-manager">
+				<form action="historyinfor.html" method="get">
+					<div class="search-manager-in">
+						<table>
+							<tr>
+								<td ><span>变电站名</span></td>
+								<td><select name="">
+									<option>沙坪坝变电站</option>
+								</select></td>
+								<td >检测人员</td>
+								<td ><input type="text" name=""></td>
+								<td >编号</td>
+								<td><input type="text" name=""></td>
+							</tr>
+							<tr>
+								<td ><span>检测时间</span></td>
+								<td ><input type="date" name=""></td>
+								<td ><span>TO</span></td>
+								<td ><input type="date" name=""><td>
+								<td colspan="2"><input type="submit" value="查询" class="ok-btn"></td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+			<div class="search-result">
+				<table>
+					<tr style="height=30px;font-size: 20px; background-color: #9F9FA0;">
+						<td>编号</td>
+						<td>站名</td>
+						<td>接地网模型名</td>
+						<td>检测员</td>
+						<td>检测时间</td>
+						<td>接线方式</td>
+						<td>注入电流值</td>
+						<td>备考</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>沙坪坝站</td>
+						<td>不知道</td>
+						<td>张三</td>
+						<td>2014-12-12</td>
+						<td>4</td>
+						<td>3</td>
+						<td>沙坪坝电力局</td>
+					</tr>
+				</table>
+				<div class="page">
+					<a href="historyinfor.html">首頁</a>
+					<a href="historyinfor.html">上一頁</a>
+					<a href="historyinfor.html">下一頁</a>
+					<a href="historyinfor.html">尾頁</a>
+					<input type="text" id="page"/>
+					<a href="historyinfor.html">跳页</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

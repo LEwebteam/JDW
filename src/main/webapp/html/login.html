@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../css/common/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/common/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="../css/common/jquery.datetimepicker.css" />
+		<link rel="stylesheet" href="../css/common/reset.css" />
+		<link rel="stylesheet" href="../css/login.css" />
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery.datetimepicker.js" ></script>
+		<script type="text/javascript" src="../js/jquery.validate.js" ></script>
+		<title>登录</title>
+	</head>
+	<body>
+		<div class="login-block">
+			<div class="login-block-in">
+				<div class="sys-title">
+					<span>接地网信息管理系统</span>
+				</div>
+				<form action="/user/login.do" method="get">
+				<div class="login-input">
+					<span>账号</span>
+					<input type="text" name="user">
+				</div>
+				<div class="login-input">
+					<span>密码</span>
+					<input type="password" name="password">
+				</div>
+				<div class="login-button">
+					<input type="submit" value="登录" class="btn-green btn-group-vertical">
+					<input type="reset" value="重置"  class="btn-group-vertical">
+				</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
