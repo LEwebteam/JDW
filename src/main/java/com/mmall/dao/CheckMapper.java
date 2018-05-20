@@ -3,6 +3,8 @@ package com.mmall.dao;
 import com.mmall.pojo.Check;
 import com.mmall.pojo.CheckWithBLOBs;
 
+import java.util.List;
+
 public interface CheckMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,4 +19,8 @@ public interface CheckMapper {
     int updateByPrimaryKeyWithBLOBs(CheckWithBLOBs record);
 
     int updateByPrimaryKey(Check record);
+
+    List<CheckWithBLOBs> selectAll();
+
+    List<CheckWithBLOBs> select(Integer stationId, Integer modelId);
 }

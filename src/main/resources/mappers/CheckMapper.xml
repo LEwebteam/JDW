@@ -1,59 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mmall.dao.CheckMapper" >
-  <resultMap id="BaseResultMap" type="com.mmall.pojo.Check" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="code" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="station_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="model_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="checker_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="check_time" jdbcType="DATE" javaType="java.util.Date" />
-      <arg column="line_method" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="line_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="reference_node" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="current_value" jdbcType="INTEGER" javaType="java.lang.Integer" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mmall.pojo.CheckWithBLOBs" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="code" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="station_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="model_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="checker_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="check_time" jdbcType="DATE" javaType="java.util.Date" />
-      <arg column="line_method" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="line_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="reference_node" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="current_value" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="weather" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="original_data" jdbcType="LONGVARBINARY" javaType="_byte[]" />
-      <arg column="transform_data" jdbcType="LONGVARBINARY" javaType="_byte[]" />
-      <arg column="check_result" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="note" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.mmall.dao.CheckMapper">
+    <resultMap id="BaseResultMap" type="com.mmall.pojo.Check">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="code" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="station_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="model_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="checker_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="check_time" jdbcType="DATE" javaType="java.util.Date"/>
+            <arg column="line_method" jdbcType="CHAR" javaType="java.lang.String"/>
+            <arg column="line_detail" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="reference_node" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="current_value" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.mmall.pojo.CheckWithBLOBs">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="code" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="station_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="model_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="checker_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="check_time" jdbcType="DATE" javaType="java.util.Date"/>
+            <arg column="line_method" jdbcType="CHAR" javaType="java.lang.String"/>
+            <arg column="line_detail" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="reference_node" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="current_value" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="weather" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="original_data" jdbcType="LONGVARBINARY" javaType="_byte[]"/>
+            <arg column="transform_data" jdbcType="LONGVARBINARY" javaType="_byte[]"/>
+            <arg column="check_result" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="note" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, code, station_id, model_id, checker_id, check_time, line_method, line_detail, 
     reference_node, current_value
   </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     weather, original_data, transform_data, check_result, note
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from jdw_check
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from jdw_check
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll"  resultMap="ResultMapWithBLOBs" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from jdw_check
+        order by id DESC
+    </select>
+    <select id="select"  resultMap="ResultMapWithBLOBs" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from jdw_check
+        WHERE 1=1
+        <if test="stationId !=null">
+            AND station_id = #{stationId}
+        </if>
+        <if test="modelId!=null">
+            AND model_id = #{modelId}
+        </if>
+        order by id desc
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from jdw_check
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mmall.pojo.CheckWithBLOBs" >
+    <insert id="insert" parameterType="com.mmall.pojo.CheckWithBLOBs">
     insert into jdw_check (id, code, station_id, 
       model_id, checker_id, check_time, 
       line_method, line_detail, reference_node, 
@@ -67,152 +90,152 @@
       #{transformData,jdbcType=LONGVARBINARY}, #{checkResult,jdbcType=LONGVARCHAR}, #{note,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mmall.pojo.CheckWithBLOBs" >
-    insert into jdw_check
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="code != null" >
-        code,
-      </if>
-      <if test="stationId != null" >
-        station_id,
-      </if>
-      <if test="modelId != null" >
-        model_id,
-      </if>
-      <if test="checkerId != null" >
-        checker_id,
-      </if>
-      <if test="checkTime != null" >
-        check_time,
-      </if>
-      <if test="lineMethod != null" >
-        line_method,
-      </if>
-      <if test="lineDetail != null" >
-        line_detail,
-      </if>
-      <if test="referenceNode != null" >
-        reference_node,
-      </if>
-      <if test="currentValue != null" >
-        current_value,
-      </if>
-      <if test="weather != null" >
-        weather,
-      </if>
-      <if test="originalData != null" >
-        original_data,
-      </if>
-      <if test="transformData != null" >
-        transform_data,
-      </if>
-      <if test="checkResult != null" >
-        check_result,
-      </if>
-      <if test="note != null" >
-        note,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="code != null" >
-        #{code,jdbcType=INTEGER},
-      </if>
-      <if test="stationId != null" >
-        #{stationId,jdbcType=INTEGER},
-      </if>
-      <if test="modelId != null" >
-        #{modelId,jdbcType=INTEGER},
-      </if>
-      <if test="checkerId != null" >
-        #{checkerId,jdbcType=INTEGER},
-      </if>
-      <if test="checkTime != null" >
-        #{checkTime,jdbcType=DATE},
-      </if>
-      <if test="lineMethod != null" >
-        #{lineMethod,jdbcType=CHAR},
-      </if>
-      <if test="lineDetail != null" >
-        #{lineDetail,jdbcType=VARCHAR},
-      </if>
-      <if test="referenceNode != null" >
-        #{referenceNode,jdbcType=INTEGER},
-      </if>
-      <if test="currentValue != null" >
-        #{currentValue,jdbcType=INTEGER},
-      </if>
-      <if test="weather != null" >
-        #{weather,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="originalData != null" >
-        #{originalData,jdbcType=LONGVARBINARY},
-      </if>
-      <if test="transformData != null" >
-        #{transformData,jdbcType=LONGVARBINARY},
-      </if>
-      <if test="checkResult != null" >
-        #{checkResult,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="note != null" >
-        #{note,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.CheckWithBLOBs" >
-    update jdw_check
-    <set >
-      <if test="code != null" >
-        code = #{code,jdbcType=INTEGER},
-      </if>
-      <if test="stationId != null" >
-        station_id = #{stationId,jdbcType=INTEGER},
-      </if>
-      <if test="modelId != null" >
-        model_id = #{modelId,jdbcType=INTEGER},
-      </if>
-      <if test="checkerId != null" >
-        checker_id = #{checkerId,jdbcType=INTEGER},
-      </if>
-      <if test="checkTime != null" >
-        check_time = #{checkTime,jdbcType=DATE},
-      </if>
-      <if test="lineMethod != null" >
-        line_method = #{lineMethod,jdbcType=CHAR},
-      </if>
-      <if test="lineDetail != null" >
-        line_detail = #{lineDetail,jdbcType=VARCHAR},
-      </if>
-      <if test="referenceNode != null" >
-        reference_node = #{referenceNode,jdbcType=INTEGER},
-      </if>
-      <if test="currentValue != null" >
-        current_value = #{currentValue,jdbcType=INTEGER},
-      </if>
-      <if test="weather != null" >
-        weather = #{weather,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="originalData != null" >
-        original_data = #{originalData,jdbcType=LONGVARBINARY},
-      </if>
-      <if test="transformData != null" >
-        transform_data = #{transformData,jdbcType=LONGVARBINARY},
-      </if>
-      <if test="checkResult != null" >
-        check_result = #{checkResult,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="note != null" >
-        note = #{note,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mmall.pojo.CheckWithBLOBs" >
+    <insert id="insertSelective" parameterType="com.mmall.pojo.CheckWithBLOBs">
+        insert into jdw_check
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="stationId != null">
+                station_id,
+            </if>
+            <if test="modelId != null">
+                model_id,
+            </if>
+            <if test="checkerId != null">
+                checker_id,
+            </if>
+            <if test="checkTime != null">
+                check_time,
+            </if>
+            <if test="lineMethod != null">
+                line_method,
+            </if>
+            <if test="lineDetail != null">
+                line_detail,
+            </if>
+            <if test="referenceNode != null">
+                reference_node,
+            </if>
+            <if test="currentValue != null">
+                current_value,
+            </if>
+            <if test="weather != null">
+                weather,
+            </if>
+            <if test="originalData != null">
+                original_data,
+            </if>
+            <if test="transformData != null">
+                transform_data,
+            </if>
+            <if test="checkResult != null">
+                check_result,
+            </if>
+            <if test="note != null">
+                note,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=INTEGER},
+            </if>
+            <if test="stationId != null">
+                #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="modelId != null">
+                #{modelId,jdbcType=INTEGER},
+            </if>
+            <if test="checkerId != null">
+                #{checkerId,jdbcType=INTEGER},
+            </if>
+            <if test="checkTime != null">
+                #{checkTime,jdbcType=DATE},
+            </if>
+            <if test="lineMethod != null">
+                #{lineMethod,jdbcType=CHAR},
+            </if>
+            <if test="lineDetail != null">
+                #{lineDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="referenceNode != null">
+                #{referenceNode,jdbcType=INTEGER},
+            </if>
+            <if test="currentValue != null">
+                #{currentValue,jdbcType=INTEGER},
+            </if>
+            <if test="weather != null">
+                #{weather,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="originalData != null">
+                #{originalData,jdbcType=LONGVARBINARY},
+            </if>
+            <if test="transformData != null">
+                #{transformData,jdbcType=LONGVARBINARY},
+            </if>
+            <if test="checkResult != null">
+                #{checkResult,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.CheckWithBLOBs">
+        update jdw_check
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=INTEGER},
+            </if>
+            <if test="stationId != null">
+                station_id = #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="modelId != null">
+                model_id = #{modelId,jdbcType=INTEGER},
+            </if>
+            <if test="checkerId != null">
+                checker_id = #{checkerId,jdbcType=INTEGER},
+            </if>
+            <if test="checkTime != null">
+                check_time = #{checkTime,jdbcType=DATE},
+            </if>
+            <if test="lineMethod != null">
+                line_method = #{lineMethod,jdbcType=CHAR},
+            </if>
+            <if test="lineDetail != null">
+                line_detail = #{lineDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="referenceNode != null">
+                reference_node = #{referenceNode,jdbcType=INTEGER},
+            </if>
+            <if test="currentValue != null">
+                current_value = #{currentValue,jdbcType=INTEGER},
+            </if>
+            <if test="weather != null">
+                weather = #{weather,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="originalData != null">
+                original_data = #{originalData,jdbcType=LONGVARBINARY},
+            </if>
+            <if test="transformData != null">
+                transform_data = #{transformData,jdbcType=LONGVARBINARY},
+            </if>
+            <if test="checkResult != null">
+                check_result = #{checkResult,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="note != null">
+                note = #{note,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mmall.pojo.CheckWithBLOBs">
     update jdw_check
     set code = #{code,jdbcType=INTEGER},
       station_id = #{stationId,jdbcType=INTEGER},
@@ -230,7 +253,7 @@
       note = #{note,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Check" >
+    <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Check">
     update jdw_check
     set code = #{code,jdbcType=INTEGER},
       station_id = #{stationId,jdbcType=INTEGER},

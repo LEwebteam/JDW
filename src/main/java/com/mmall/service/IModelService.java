@@ -1,25 +1,33 @@
 package com.mmall.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
-import com.mmall.vo.CartVo;
+import com.mmall.pojo.Model;
+import com.mmall.pojo.Station;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * Created by geely
  */
 public interface IModelService {
-    ServerResponse<CartVo> add(Integer userId, Integer productId, Integer count);
 
-    ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count);
 
-    ServerResponse<CartVo> deleteModel(Integer userId, String productIds);
+    ServerResponse selectByPrimaryKey(Integer modelId);
 
-    ServerResponse<CartVo> list(Integer userId);
+    ServerResponse saveOrUpdateModel(Model model);
 
-    ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked);
 
-    ServerResponse<Integer> getCartProductCount(Integer userId);
+    ServerResponse<PageInfo> getModelList(int pageNum, int pageSize);
 
-/*
-    ServerResponse<byte[]> getDrawingById(Integer Id);
-*/
+    ServerResponse<PageInfo> searchModel(String stationName, Integer stationId, String stationType, String stationLevel, Integer office, Date startTime, Date endTime, int pageNum, int pageSize);
+
+    ServerResponse deleteModel(Integer modelId);
+
+
+
+    ServerResponse<PageInfo> getModelListBystation(Integer stationId, int pageNum, int pageSize);
+
+    ServerResponse<String> getDrawing(Integer stationId, HttpServletRequest request);
 }

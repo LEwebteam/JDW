@@ -18,4 +18,6 @@ public interface ModelMapper {
     int updateByPrimaryKey(Model record);
 
     List<Model> selectAll();
+
+    List<Model> selectByStationId(Integer stationId);
 }

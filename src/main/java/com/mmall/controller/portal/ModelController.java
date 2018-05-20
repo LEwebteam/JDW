@@ -5,10 +5,11 @@ import com.google.common.collect.Maps;
 import com.mmall.common.Const;
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Station;
+import com.mmall.pojo.Model;
 import com.mmall.pojo.User;
 import com.mmall.service.IFileService;
-import com.mmall.service.IStationService;
+import com.mmall.service.IModelService;
+import com.mmall.service.IModelService;
 import com.mmall.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,19 +29,20 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/station")
-public class StationController {
+@RequestMapping("/model")
+public class ModelController {
 
     @Autowired
     private IUserService iUserService;
     @Autowired
-    private IStationService iStationService;
-    @Autowired
     private IFileService iFileService;
+    @Autowired
+    private IModelService iModelService;
+
 
     @RequestMapping("save.do")
     @ResponseBody
-    public ServerResponse productSave(HttpSession session, Station station) {
+    public ServerResponse productSave(HttpSession session, Model model) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
@@ -48,18 +50,17 @@ public class StationController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //管理员直接添加---office是否固定选项？
-            return iStationService.saveOrUpdateStation(station);
+            return iModelService.saveOrUpdateModel(model);
         } else {
             //不是管理员则设置officeid
-            station.setOffice(user.getOfficeId());
-            return iStationService.saveOrUpdateStation(station);
+            return iModelService.saveOrUpdateModel(model);
         }
     }
 
 
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse getList(HttpSession session, @RequestParam(value = "stationId", required = false) Integer stationId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
@@ -67,15 +68,20 @@ public class StationController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
-            return iStationService.getStationtList(pageNum, pageSize);
+            if (stationId == null)
+                return iModelService.getModelList(pageNum, pageSize);
+            else {
+                return iModelService.getModelListBystation(stationId, pageNum, pageSize);
+            }
         }
-
-        return iStationService.getStationtList(user.getOfficeId(), pageNum, pageSize);
+        if (stationId != null)
+            return iModelService.getModelListBystation(stationId, pageNum, pageSize);
+        else return ServerResponse.createByErrorMessage("请输入stationid");
     }
 
     @RequestMapping("search.do")
     @ResponseBody
-    public ServerResponse<PageInfo> productSearch(HttpSession session, String stationName, Integer stationId, String stationType, String stationLevel, Integer office, Date startTime, Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse<PageInfo> productSearch(HttpSession session, String modelName, Integer modelId, String modelType, String modelLevel, Integer office, Date startTime, Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
@@ -83,14 +89,14 @@ public class StationController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
-            return iStationService.searchStation(stationName, stationId, stationType, stationLevel, office, startTime, endTime, pageNum, pageSize);
+            return iModelService.searchModel(modelName, modelId, modelType, modelLevel, office, startTime, endTime, pageNum, pageSize);
         } else {
             office = user.getOfficeId();
-            return iStationService.searchStation(stationName, stationId, stationType, stationLevel, office, startTime, endTime, pageNum, pageSize);
+            return iModelService.searchModel(modelName, modelId, modelType, modelLevel, office, startTime, endTime, pageNum, pageSize);
         }
     }
 
-    @RequestMapping(value = "upload.do",method = RequestMethod.POST)
+    @RequestMapping(value = "upload.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -109,12 +115,12 @@ public class StationController {
 
     @RequestMapping("getdrawing.do")
     @ResponseBody
-    public ServerResponse<String> getDrawing(HttpSession session, Integer stationId,HttpServletRequest request) {
+    public ServerResponse<String> getDrawing(HttpSession session, Integer modelId, HttpServletRequest request) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
         }
-        return iStationService.getDrawing(stationId,request);
+        return iModelService.getDrawing(modelId, request);
     }
 
 

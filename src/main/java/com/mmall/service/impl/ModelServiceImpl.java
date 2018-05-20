@@ -6,11 +6,13 @@ import com.mmall.common.ServerResponse;
 import com.mmall.dao.ModelMapper;
 import com.mmall.pojo.Model;
 import com.mmall.service.IModelService;
-import com.mmall.vo.CartVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ModelServiceImpl implements IModelService {
@@ -18,49 +20,81 @@ public class ModelServiceImpl implements IModelService {
     @Autowired
     ModelMapper modelMapper;
 
-    public PageInfo getAllResultByPage(Integer pageNum, Integer pageSize) {
 
-        PageHelper.startPage(pageNum, pageSize);
-        List<Model> models = modelMapper.selectAll();
-        PageInfo<Model> pageInfo = new PageInfo<Model>(models);
-        return pageInfo;
-    }
-
-  /*  public ServerResponse<byte[]> getDrawingById(Integer id) {//得到图纸
-        ModelWithBLOBs m = modelMapper.selectByPrimaryKey(id);
-        if (m != null || m.getDrawing() == null || m.getDrawing().length == 0) {
-            return ServerResponse.createBySuccess(m.getDrawing());
+    @Override
+    public ServerResponse
+    selectByPrimaryKey(Integer modelId){
+      Model model= modelMapper.selectByPrimaryKey(modelId);
+        if(model!=null){
+            return ServerResponse.createBySuccess(model);
         }
-        return ServerResponse.createByErrorMessage("图纸不存在");
-    }*/
+        return ServerResponse.createByErrorMessage("无信息");
+    }
 
     @Override
-    public ServerResponse<CartVo> add(Integer userId, Integer productId, Integer count) {
+    public ServerResponse saveOrUpdateModel(Model model) {
+        if (model != null) {
+            if (model.getId() != null) {
+                int rowCount = modelMapper.updateByPrimaryKeySelective(model);
+                if (rowCount > 0) {
+                    return ServerResponse.createBySuccess("模型更新成功");
+                }
+                return ServerResponse.createBySuccess("模型更新失败");
+            } else {
+                int rowCount = modelMapper.insertSelective(model);
+                if (rowCount > 0) {
+                    return ServerResponse.createBySuccess("模型新增成功");
+                }
+                return ServerResponse.createBySuccess("模型新增失败");
+            }
+        }
+
+        return ServerResponse.createByErrorMessage("保存失败");
+    }
+
+    @Override
+    public ServerResponse<PageInfo> getModelList(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Model> modelList = modelMapper.selectAll();
+        PageInfo pageInfo = new PageInfo((modelList));
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
+    @Override
+    public ServerResponse<PageInfo> searchModel(String modelName, Integer modelId, String modelType, String modelLevel, Integer office, Date startTime, Date endTime, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+      //  List<Model> modelList = modelMapper.select(modelName, modelId, modelType, modelLevel, office, startTime, endTime);
+     //   PageInfo pageInfo = new PageInfo(modelList);
+      //  return ServerResponse.createBySuccess(pageInfo);
         return null;
     }
 
     @Override
-    public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count) {
-        return null;
+    public ServerResponse deleteModel(Integer modelId) {
+        Integer rowCount = modelMapper.deleteByPrimaryKey(modelId);
+        if(rowCount>0){
+
+            return ServerResponse.createBySuccess("删除成功");
+        }else{
+            return ServerResponse.createByErrorMessage("删除失败");
+    }
+
+
+
+   
+}
+
+    @Override
+    public ServerResponse<PageInfo> getModelListBystation(Integer stationId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Model> modelList = modelMapper.selectByStationId(stationId);
+        PageInfo pageInfo = new PageInfo(modelList);
+        return ServerResponse.createBySuccess(pageInfo);
     }
 
     @Override
-    public ServerResponse<CartVo> deleteModel(Integer userId, String productIds) {
-        return null;
-    }
-
-    @Override
-    public ServerResponse<CartVo> list(Integer userId) {
-        return null;
-    }
-
-    @Override
-    public ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked) {
-        return null;
-    }
-
-    @Override
-    public ServerResponse<Integer> getCartProductCount(Integer userId) {
+    public ServerResponse<String> getDrawing(Integer modelId, HttpServletRequest request) {
         return null;
     }
 }
+
