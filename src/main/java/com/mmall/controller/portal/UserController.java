@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
@@ -49,10 +50,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "logout.do")
-    @ResponseBody
-    public ServerResponse<String> logout(HttpSession session) {
+    public String logout(HttpSession session) {
+
         session.removeAttribute(Const.CURRENT_USER);
-        return ServerResponse.createBySuccess();
+        return "/html/login";
     }
 
     @RequestMapping(value = "register.do")
@@ -63,7 +64,7 @@ public class UserController {
 
     @RequestMapping(value = "setadmin.do")
     @ResponseBody
-    public ServerResponse<String> setadmin(Integer userid,HttpSession session){
+    public ServerResponse<String> setadmin(Integer userid, HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
@@ -167,14 +168,13 @@ public class UserController {
         user.setUsername(currentUser.getUsername());
         user.setPhone(currentUser.getPhone());*/
         ServerResponse<User> response;
-        if(iUserService.checkAdminRole(currentUser).isSuccess()){
-            response=  iUserService.updateInformation(user);
-        }
-        else{
-           User oldUser = iUserService.getInformation(currentUser.getId()).getData();
+        if (iUserService.checkAdminRole(currentUser).isSuccess()) {
+            response = iUserService.updateInformation(user);
+        } else {
+            User oldUser = iUserService.getInformation(currentUser.getId()).getData();
             user.setId(currentUser.getId());
-           user.setOfficeId(oldUser.getOfficeId());
-            response= iUserService.updateInformation(user);
+            user.setOfficeId(oldUser.getOfficeId());
+            response = iUserService.updateInformation(user);
         }
         return response;
     }

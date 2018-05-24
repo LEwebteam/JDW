@@ -21,29 +21,26 @@ public class IndexController {
     private IUserService iUserService;
 
     @RequestMapping("/welcome.do")
-    @ResponseBody
     public ModelAndView welcome(HttpSession session) {
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         return modelAndView;
     }
 
-    @RequestMapping("/loginwelcome.do")
-    @ResponseBody
+/*    @RequestMapping("/login.do")
     public ModelAndView login(HttpSession session) {
-
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("html/login");
+
         return modelAndView;
-    }
+    }*/
     @RequestMapping("/testcheck.do")
     @ResponseBody
     public ModelAndView check(HttpSession session, Check check) {
-
         System.out.println(check.getStationId());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
     }
+
 }

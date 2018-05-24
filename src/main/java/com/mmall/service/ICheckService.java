@@ -21,7 +21,7 @@ public interface ICheckService {
 
     ServerResponse<PageInfo> getCheckList(int pageNum, int pageSize);
 
-    ServerResponse<PageInfo> searchCheck(String stationName, Integer stationId, String stationType, String stationLevel, Integer office, Date startTime, Date endTime, int pageNum, int pageSize);
+    ServerResponse<PageInfo> searchCheck(String stationName, Integer stationId, String modelId, Integer checkerId, Date startTime, Date endTime, int pageNum, int pageSize);
 
     ServerResponse deleteCheck(Integer checkId);
 

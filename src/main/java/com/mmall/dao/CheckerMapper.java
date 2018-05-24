@@ -23,4 +23,8 @@ public interface CheckerMapper {
     List<Checker> select(@Param("checkerName") String checkerName, @Param("office") Integer office);
 
     List<Checker> selectByOfficeId(@Param("officeId") Integer officeId);
+
+    List<Checker> selectByStationId(@Param("stationId")Integer stationId);
+
+    List<Checker> selectByModelId(@Param("modelId")Integer modelId);
 }

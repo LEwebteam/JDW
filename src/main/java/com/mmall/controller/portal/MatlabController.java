@@ -25,15 +25,12 @@ public class MatlabController {
 
     @RequestMapping("/getResult.do")
     @ResponseBody
-    public ServerResponse<String> getMat(Integer modelId, Integer checkId, HttpServletRequest request) throws MWException, IOException {
-
-        Model model = (Model) modelService.selectByPrimaryKey(modelId).getData();
+    public ServerResponse<String> getMat( Integer checkId, HttpServletRequest request) throws MWException, IOException {
         CheckWithBLOBs check = (CheckWithBLOBs) checkService.selectByPrimaryKeyWithBolgs(checkId).getData();
+        Model model = (Model) modelService.selectByPrimaryKey(check.getModelId()).getData();
         String s = MatlabUtil.process(check, model, request);
         check.setCheckResult(s);
-
         checkService.saveOrUpdateCheck(check);
-
         return ServerResponse.createBySuccess(s);
     }
 }

@@ -3,7 +3,6 @@ package com.mmall.service;
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.Model;
-import com.mmall.pojo.Station;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -16,7 +15,7 @@ public interface IModelService {
 
     ServerResponse selectByPrimaryKey(Integer modelId);
 
-    ServerResponse saveOrUpdateModel(Model model);
+    ServerResponse saveOrUpdateModel(Model model, String deletiInfo);
 
 
     ServerResponse<PageInfo> getModelList(int pageNum, int pageSize);

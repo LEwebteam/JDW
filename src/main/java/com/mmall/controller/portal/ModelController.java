@@ -5,12 +5,16 @@ import com.google.common.collect.Maps;
 import com.mmall.common.Const;
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
+import com.mmall.pojo.Deleteinfo;
 import com.mmall.pojo.Model;
 import com.mmall.pojo.User;
+import com.mmall.service.IDeleteInfoService;
 import com.mmall.service.IFileService;
 import com.mmall.service.IModelService;
-import com.mmall.service.IModelService;
 import com.mmall.service.IUserService;
+import com.mmall.service.impl.ModelServiceImpl;
+import com.sun.xml.internal.ws.resources.HttpserverMessages;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by geely
@@ -39,21 +45,58 @@ public class ModelController {
     @Autowired
     private IModelService iModelService;
 
+    @Autowired
+    private IDeleteInfoService deleteInfoService;
 
     @RequestMapping("save.do")
     @ResponseBody
-    public ServerResponse productSave(HttpSession session, Model model) {
+    public ServerResponse productSave(HttpSession session, Model model,String deletiInfo) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
 
         }
+        if (model.getRowFixedDistance() == null || model.getRowFixedDistance().equals("0")) {
+            ArrayList<Integer> arraylist = new ArrayList<>();
+            if (model.getRowMyDistance() != null && model.getRowMyDistance().length() != 0) {
+                String[] ss = model.getRowMyDistance().split(",");
+                for (String sTmp : ss) {
+                    arraylist.add(Integer.parseInt(sTmp));
+                }
+                Integer sum = 0;
+                for (Integer tmpSs : arraylist) {
+                    sum += tmpSs;
+                }
+                model.setRowFixedDistance(String.valueOf(sum / arraylist.size()));
+            } else {
+                return ServerResponse.createByErrorMessage("请输入间距");
+            }
+        }
+        if (model.getCloumnFixedDistance() == null || model.getCloumnFixedDistance().equals("0")) {
+            ArrayList<Integer> arraylist = new ArrayList<>();
+            if (model.getCloumnMyDistance() != null && model.getCloumnMyDistance().length() != 0) {
+                String[] ss = model.getCloumnMyDistance().split(",");
+                for (String sTmp : ss) {
+                    arraylist.add(Integer.parseInt(sTmp));
+                }
+                Integer sum = 0;
+                for (Integer tmpSs : arraylist) {
+                    sum += tmpSs;
+                }
+                model.setCloumnFixedDistance(String.valueOf(sum / arraylist.size()));
+            } else {
+                return ServerResponse.createByErrorMessage("");
+            }
+        }
+        ServerResponse serverResponse=iModelService.saveOrUpdateModel(model,deletiInfo);
+
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //管理员直接添加---office是否固定选项？
-            return iModelService.saveOrUpdateModel(model);
+
+            return serverResponse;
         } else {
             //不是管理员则设置officeid
-            return iModelService.saveOrUpdateModel(model);
+            return serverResponse;
         }
     }
 
@@ -77,6 +120,18 @@ public class ModelController {
         if (stationId != null)
             return iModelService.getModelListBystation(stationId, pageNum, pageSize);
         else return ServerResponse.createByErrorMessage("请输入stationid");
+    }
+
+    @RequestMapping("get.do")
+    @ResponseBody
+    public ServerResponse getByid(HttpSession session, @RequestParam(required = true) Integer modelId){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
+
+        }
+        return iModelService.selectByPrimaryKey(modelId);
+
     }
 
     @RequestMapping("search.do")
@@ -122,44 +177,6 @@ public class ModelController {
         }
         return iModelService.getDrawing(modelId, request);
     }
-
-
-  /*  @RequestMapping("richtext_img_upload.do")
-    @ResponseBody
-    public Map richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
-        Map resultMap = Maps.newHashMap();
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            resultMap.put("success", false);
-            resultMap.put("msg", "请登录管理员");
-            return resultMap;
-        }
-        //富文本中对于返回值有自己的要求,我们使用是simditor所以按照simditor的要求进行返回
-//        {
-//            "success": true/false,
-//                "msg": "error message", # optional
-//            "file_path": "[real file path]"
-//        }
-        if (iUserService.checkAdminRole(user).isSuccess()) {
-            String path = request.getSession().getServletContext().getRealPath("upload");
-            String targetFileName = iFileService.upload(file, path);
-            if (StringUtils.isBlank(targetFileName)) {
-                resultMap.put("success", false);
-                resultMap.put("msg", "上传失败");
-                return resultMap;
-            }
-            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
-            resultMap.put("success", true);
-            resultMap.put("msg", "上传成功");
-            resultMap.put("file_path", url);
-            response.addHeader("Access-Control-Allow-Headers", "X-File-Name");
-            return resultMap;
-        } else {
-            resultMap.put("success", false);
-            resultMap.put("msg", "无权限操作");
-            return resultMap;
-        }
-    }*/
 
 
 }

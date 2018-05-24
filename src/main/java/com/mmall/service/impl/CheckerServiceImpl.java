@@ -84,4 +84,20 @@ public class CheckerServiceImpl implements ICheckerService {
         PageInfo pageInfo = new PageInfo(checkerList);
         return ServerResponse.createBySuccess(pageInfo);
     }
+
+    @Override
+    public ServerResponse<PageInfo> getCheckertListBystationId(Integer stationId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Checker> checkerList = checkerMapper.selectByStationId(stationId);
+        PageInfo pageInfo = new PageInfo(checkerList);
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
+    @Override
+    public ServerResponse<PageInfo> getCheckertListBymodelId(Integer modelId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Checker> checkerList = checkerMapper.selectByModelId(modelId);
+        PageInfo pageInfo = new PageInfo(checkerList);
+        return ServerResponse.createBySuccess(pageInfo);
+    }
 }

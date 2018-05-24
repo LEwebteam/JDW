@@ -7,15 +7,16 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.Check;
 import com.mmall.pojo.CheckWithBLOBs;
-import com.mmall.pojo.Station;
 import com.mmall.pojo.User;
 import com.mmall.service.ICheckService;
 import com.mmall.service.IFileService;
 import com.mmall.service.IUserService;
-import com.mmall.vo.OriginFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class CheckController {
     @Autowired
     private IFileService iFileService;
 
-    @RequestMapping("sss.do")
+    @RequestMapping("save.do")
     @ResponseBody
     public ServerResponse productSave(HttpSession session, Check check, @RequestParam("filename") String filename) throws IOException {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -98,10 +99,21 @@ public class CheckController {
         return iCheckService.getCheckList(stationId, modelId, pageNum, pageSize);
     }
 
+    @RequestMapping("get.do")
+    @ResponseBody
+    public ServerResponse getByid(HttpSession session, @RequestParam(required = true) Integer checkId) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
+
+        }
+        return iCheckService.selectByPrimaryKey(checkId);
+    }
+
     @RequestMapping("search.do")
     @ResponseBody
     public ServerResponse<PageInfo> productSearch(HttpSession session, String checkName, Integer checkId, String checkType, String checkLevel, Integer office, Date startTime, Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+   /*     User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
 
@@ -112,7 +124,8 @@ public class CheckController {
         } else {
             office = user.getOfficeId();
             return iCheckService.searchCheck(checkName, checkId, checkType, checkLevel, office, startTime, endTime, pageNum, pageSize);
-        }
+        }*/
+        return null;
     }
 
     @RequestMapping(value = "upload.do", method = RequestMethod.POST)

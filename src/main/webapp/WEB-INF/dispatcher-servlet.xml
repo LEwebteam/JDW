@@ -31,11 +31,18 @@
     </mvc:annotation-driven>
     <!-- 配置SpringMVC的视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/html/"/>
+        <property name="prefix" value=""/>
         <property name="suffix" value=".html"/>
     </bean>
 
-
+<mvc:interceptors>
+    <mvc:interceptor>
+        <mvc:mapping path="/**"/>
+        <mvc:exclude-mapping path="/login.do"/>
+        <mvc:exclude-mapping path="/user/login.do"/>
+        <bean class="com.mmall.controller.InterceptorLogin"/>
+    </mvc:interceptor>
+</mvc:interceptors>
 
     <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
