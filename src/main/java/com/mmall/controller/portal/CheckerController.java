@@ -46,18 +46,19 @@ public class CheckerController {
 
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse getList(HttpSession session, Integer stationId, Integer modelId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-
         }
-        if (iUserService.checkAdminRole(user).isSuccess()) {
-            //填充业务
-            return iCheckerService.getCheckertList(pageNum, pageSize);
+        if(stationId!=null){
+            iCheckerService.getCheckertListBystationId(stationId,pageNum,pageSize);
+        }
+        if(modelId!=null){
+            iCheckerService.getCheckertListBymodelId(modelId,pageNum,pageSize);
         }
 
-        return iCheckerService.getCheckertList(user.getOfficeId(), pageNum, pageSize);
+        return iCheckerService.getCheckertList(pageNum, pageSize);
     }
 
     @RequestMapping("search.do")
@@ -77,6 +78,18 @@ public class CheckerController {
         }
     }
 
+    @RequestMapping("get.do")
+    @ResponseBody
+    public ServerResponse getByid(HttpSession session, @RequestParam(required = true) Integer checkerId) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
+
+        }
+        return iCheckerService.selectByPrimaryKey(checkerId);
+
+    }
+
     @RequestMapping("delete.do")
     @ResponseBody
     public ServerResponse<PageInfo> checkerDelete(HttpSession session, Integer checkerId) {
@@ -93,7 +106,7 @@ public class CheckerController {
             if (checker != null) {
                 if (checker.getOffice() == office) {
                     return iCheckerService.deleteChecker(checkerId);
-                }else {
+                } else {
                     return ServerResponse.createByErrorMessage("非本单位检测员不能删除");
 
                 }

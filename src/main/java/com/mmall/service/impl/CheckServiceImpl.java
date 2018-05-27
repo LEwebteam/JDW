@@ -79,13 +79,10 @@ public class CheckServiceImpl implements ICheckService {
     }
 
     @Override
-    public ServerResponse<PageInfo> searchCheck(String checkName, Integer checkId, String checkType, String checkLevel, Integer office, Date startTime, Date endTime, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        //  List<Check> checkList = checkMapper.select(checkName, checkId, checkType, checkLevel, office, startTime, endTime);
-        //   PageInfo pageInfo = new PageInfo(checkList);
-        //  return ServerResponse.createBySuccess(pageInfo);
+    public ServerResponse<PageInfo> searchCheck(String stationName, Integer stationId, String modelId, Integer checkerId, Date startTime, Date endTime, int pageNum, int pageSize) {
         return null;
     }
+
 
     @Override
     public ServerResponse deleteCheck(Integer checkId) {

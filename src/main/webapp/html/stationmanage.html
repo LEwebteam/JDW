@@ -20,7 +20,7 @@
 				<a href="#" onclick="history.back(-1)" class="goback"><img src="../img/back.png">上一页</a>
 			</div>
 			<div class="search-manager">
-				<form action="stationmanage.html" method="get">
+				<form action="/stationmanage.do" method="get">
 					<div class="search-manager-in">
 						<table>
 							<tr>
@@ -45,7 +45,7 @@
 								<td><span>TO</span></td>
 								<td><input type="date" name=""></td>
 								<td colspan="2"><input type="submit" value="查询" class="ok-btn"></td>
-								<td colspan="2"><input type="button" value="添加" class="ok-btn" onclick="window.location.href='addstation.html'"></td>
+								<td colspan="2"><input type="button" value="添加" class="ok-btn" onclick="window.location.href='/addstation.do'"></td>
 							</tr>
 						</table>
 					</div>
@@ -77,16 +77,16 @@
 						<td>沙坪坝</td>
 						<td>不清楚</td>
 						<td><a href="#">查看</a></td>
-						<td><a href="#" onclick="window.location.href='editstation.html'">编辑</a></td>
+							<td><a href="#" onclick="window.location.href='/editstation.do'">编辑</a></td>
 					</tr>
 				</table>
 				<div class="page">
-					<a href="stationmanage.html">首頁</a>
-					<a href="stationmanage.html">上一頁</a>
-					<a href="stationmanage.html">下一頁</a>
-					<a href="stationmanage.html">尾頁</a>
+					<a href="/stationmanage.do">首頁</a>
+					<a href="/stationmanage.do">上一頁</a>
+					<a href="/stationmanage.do">下一頁</a>
+					<a href="/stationmanage.do">尾頁</a>
 					<input type="text" id="page"/>
-					<a href="stationmanage.html">跳页</a>
+					<a href="/stationmanage.do">跳页</a>
 				</div>
 			</div>
 		</div>

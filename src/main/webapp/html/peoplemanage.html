@@ -20,7 +20,7 @@
 				<a href="#" onclick="history.back(-1)" class="goback"><img src="../img/back.png">上一页</a>
 			</div>
 			<div class="search-manager">
-				<form action="peoplemanage.html" method="get">
+				<form action="/peoplemanage.do" method="get">
 				<div class="search-manager-in">
 					<table>
 						<tr>
@@ -31,7 +31,7 @@
 							<option>1</option>
 							</select></td>
 							<td><input type="submit" value="查詢" class="ok-btn"></td>
-							<td><button type="button" onclick="window.location.href='addperson.html'" class="ok-btn">添加</button></td>
+							<td><button type="button" onclick="window.location.href='/addperson.do'" class="ok-btn">添加</button></td>
 						</tr>
 					</table>
 				</div>
@@ -55,16 +55,16 @@
 						<td>沙坪坝</td>
 						<td>3</td>
 						<td>1325487574</td>
-						<td><a href="#">删除</a> | <a href="#" onclick="window.location.href='editperson.html'">编辑</a></td>
+						<td><a href="#">删除</a> | <a href="#" onclick="window.location.href='/editperson.do'">编辑</a></td>
 					</tr>
 				</table>
 				<div class="page">
-					<a href="peoplemanage.html">首頁</a>
-					<a href="peoplemanage.html">上一頁</a>
-					<a href="peoplemanage.html">下一頁</a>
-					<a href="peoplemanage.html">尾頁</a>
+					<a href="/peoplemanage.do">首頁</a>
+					<a href="/peoplemanage.do">上一頁</a>
+					<a href="/peoplemanage.do">下一頁</a>
+					<a href="/peoplemanage.do">尾頁</a>
 					<input type="text" id="page"/>
-					<a href="peoplemanage.html">跳页</a>
+					<a href="/peoplemanage.do">跳页</a>
 				</div>
 			</div>
 		</div>

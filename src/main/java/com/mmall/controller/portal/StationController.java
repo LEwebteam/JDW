@@ -55,7 +55,17 @@ public class StationController {
             return iStationService.saveOrUpdateStation(station);
         }
     }
+    @RequestMapping("get.do")
+    @ResponseBody
+    public ServerResponse getByid(HttpSession session, @RequestParam(required = true) Integer stationId){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
 
+        }
+        return iStationService.selectByPrimaryKey(stationId);
+
+    }
 
     @RequestMapping("list.do")
     @ResponseBody
@@ -100,7 +110,7 @@ public class StationController {
 //        if (iUserService.checkAdminRole(user).isSuccess()) {
         String path = request.getSession().getServletContext().getRealPath("/upload");
         String targetFileName = iFileService.upload(file, path);
-        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/JDW/upload/" + targetFileName;
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/upload/" + targetFileName;
         Map fileMap = Maps.newHashMap();
         fileMap.put("uri", targetFileName);//存返回的文件名
         fileMap.put("url", url);

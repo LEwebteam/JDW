@@ -48,6 +48,25 @@
             and office = #{officeId}
         </if>
     </select>
+    <select id="selectByStationId" resultType="com.mmall.pojo.Checker">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from jdw_checker
+        WHERE 1=1
+        <if test="stationId!=null">
+            and station_id = #{stationId}
+        </if>
+    </select>
+    <select id="selectByModelId" resultType="com.mmall.pojo.Checker">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from jdw_checker
+        WHERE 1=1
+        <if test="modelId!=null">
+            and model_id = #{modelId}
+        </if>
+
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from jdw_checker
     where id = #{id,jdbcType=INTEGER}
