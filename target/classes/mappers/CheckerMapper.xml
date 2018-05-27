@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.CheckerMapper">
+    <resultMap id="BaseResultMap" type="com.mmall.pojo.Checker">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="sex" jdbcType="CHAR" javaType="java.lang.String"/>
+            <arg column="office" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="level" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="phonenum" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, sex, office, level, phonenum
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from jdw_checker
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jdw_checker
+        order by id desc
+    </select>
+    <select id="select" resultType="com.mmall.pojo.Checker">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM jdw_checker
+        WHERE 1=1
+        <if test="checkerName!=null">
+            AND name=#{checkerName}
+        </if>
+        <if test="office!=null">
+            and office=#{office}
+        </if>
+    </select>
+    <select id="selectByOfficeId" resultType="com.mmall.pojo.Checker">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from jdw_checker
+        WHERE 1=1
+        <if test="officeId!=null">
+            and office = #{officeId}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jdw_checker
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.mmall.pojo.Checker">
+    insert into jdw_checker (id, name, sex, office, 
+      level, phonenum)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{office,jdbcType=INTEGER}, 
+      #{level,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.mmall.pojo.Checker">
+        insert into jdw_checker
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="office != null">
+                office,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="phonenum != null">
+                phonenum,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=CHAR},
+            </if>
+            <if test="office != null">
+                #{office,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="phonenum != null">
+                #{phonenum,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.Checker">
+        update jdw_checker
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=CHAR},
+            </if>
+            <if test="office != null">
+                office = #{office,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="phonenum != null">
+                phonenum = #{phonenum,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Checker">
+    update jdw_checker
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      office = #{office,jdbcType=INTEGER},
+      level = #{level,jdbcType=VARCHAR},
+      phonenum = #{phonenum,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

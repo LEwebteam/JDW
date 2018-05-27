@@ -1,14 +1,13 @@
 package com.mmall.util;
 
 import com.mathworks.toolbox.javabuilder.MWException;
-import com.mmall.common.ServerResponse;
 import com.mmall.pojo.CheckWithBLOBs;
 import com.mmall.pojo.Model;
 import main2018.Main2018main;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class MatlabUtil {
     public static String process(CheckWithBLOBs check, Model model,HttpServletRequest request) throws MWException, IOException {
