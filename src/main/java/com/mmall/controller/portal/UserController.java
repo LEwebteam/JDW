@@ -50,10 +50,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "logout.do")
-    public String logout(HttpSession session) {
+    @ResponseBody
+    public ServerResponse<User> logout(HttpSession session) {
 
         session.removeAttribute(Const.CURRENT_USER);
-        return "/html/login";
+        return ServerResponse.createBySuccessMessage("登出成功");
     }
 
     @RequestMapping(value = "register.do")
