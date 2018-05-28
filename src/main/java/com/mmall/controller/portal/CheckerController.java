@@ -31,7 +31,6 @@ public class CheckerController {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //管理员直接添加---office是否固定选项？

@@ -1,80 +1,11 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="../css/common/bootstrap.min.css" />
-		<link rel="stylesheet" href="../css/common/bootstrap-theme.min.css" />
-		<link rel="stylesheet" href="../css/common/jquery.datetimepicker.css" />
-		<link rel="stylesheet" href="../css/common/reset.css" />
-		<!--<link rel="stylesheet" href="../css/index.css" />-->
-		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
-		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
-		<script type="text/javascript" src="../js/jquery.datetimepicker.js" ></script>
-		<script type="text/javascript" src="../js/jquery.validate.js" ></script>
-		<title>接地网系统</title>
-	</head>
-	<body>
-		<div class="head">
-			<img src="../img/head.jpg">
-			<div class="login-infor">
-				<div class="tixing"></div>
-				<div class="head-text">
-					<span class="date"></span><span class="time"></span><span>出现异常 <a href="/user/logout.do">注销</a></span>
-				</div>		
-			</div>
-		</div>
-		<h1>出现异常</h1>
-<script type="text/javascript">
-function setiframe(str){
-	$("#iframe",parent.document.body).attr("src",str);
-}
-function gogimg(obj){
-	var src = $(obj).children("img")[0].src;
-	if(src.substring(src.length-7,src.length)=="add.png")
-		$(obj).children("img").attr("src","../img/sub.png");
-	else
-		$(obj).children("img").attr("src","../img/add.png");
-}
-function p(s) {
-	return s<10 ? '0'+s:s;
-}
-function getdate() {
-	var date = new Date();
-	var year = date.getFullYear();
-	var month = date.getMonth()+1;
-	var day = date.getDate();
-	
-	var result = year+'-'+p(month)+'-'+p(day);
-	$('.date').text(result);
-	setTimeout("getdate()",1000);
-}
-function gettime() {
-	var date = new Date();
-	var h = date.getHours();
-	var m = date.getMinutes();
-	var s = date.getSeconds();
-	
-	var result = p(h)+':'+p(m)+':'+p(s);
-	$('.time').text(result);
-	setTimeout("gettime()",1000);
-}
-$(document).ready(function(){
-	var height=$("html").height()-$(".head").height()-10;
-	$(".content").css("height",height);
-	getdate();
-	gettime();
-	  var navs=$(".menu-li"); 
-	  var navcontents=$(".submenu"); 
-	  var navlen=navs.length; 
-	  $(".menu-li a").click(function(){ 
-	    if($(this).siblings().css("display")=="none"){ 
-	      $(this).siblings().css("display","block") 
-	    } 
-	    else{ 
-	      $(this).siblings().css("display","none")  
-	    }    
-	  });  
-	});
-</script>
-	</body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>出现异常</title>
+</head>
+<body>
+<h1>出现异常</h1>
+
+</body>
 </html>

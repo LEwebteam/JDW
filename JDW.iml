@@ -73,5 +73,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-web:4.0.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.0.4.RELEASE" level="project" />
     <orderEntry type="library" name="javabuilder" level="project" />
+    <orderEntry type="library" name="main2018" level="project" />
   </component>
 </module>
