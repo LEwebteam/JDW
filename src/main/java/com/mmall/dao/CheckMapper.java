@@ -23,5 +23,5 @@ public interface CheckMapper {
 
     List<CheckWithBLOBs> selectAll();
 
-    List<CheckWithBLOBs> select(@Param("officeId") Integer );
-}officeId
+    List<CheckWithBLOBs> select(@Param("officeId") Integer officeId);
+}
