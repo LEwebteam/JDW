@@ -27,7 +27,17 @@ public class CheckerServiceImpl implements ICheckerService {
     public ServerResponse selectByPrimaryKey(Integer checkerId) {
         Checker checker = checkerMapper.selectByPrimaryKey(checkerId);
         if (checker != null) {
-            return ServerResponse.createBySuccess(checker);
+            List<Company> companyList = companyMapper.selectAll();
+
+            CheckerOV checkOV = new CheckerOV(checker);
+            for (Company company : companyList) {
+                if (company.getId() == checker.getOffice()) {
+                    checkOV.officename = company.getCompanyName();
+                    break;
+                }
+            }
+
+            return ServerResponse.createBySuccess(checkOV);
         }
         return ServerResponse.createByErrorMessage("无信息");
     }
@@ -79,7 +89,19 @@ public class CheckerServiceImpl implements ICheckerService {
     public ServerResponse<PageInfo> searchChecker(String checkerName, Integer office, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Checker> checkerList = checkerMapper.select(checkerName, office);
-        PageInfo pageInfo = new PageInfo(checkerList);
+        List<Company> companyList = companyMapper.selectAll();
+        List<CheckerOV> checkOVS = new ArrayList<>();
+        for (Checker checkerT : checkerList) {
+            CheckerOV checkOV = new CheckerOV(checkerT);
+            for (Company company : companyList) {
+                if (company.getId() == checkerT.getOffice()) {
+                    checkOV.officename = company.getCompanyName();
+                    break;
+                }
+            }
+            checkOVS.add(checkOV);
+        }
+        PageInfo pageInfo = new PageInfo((checkOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 

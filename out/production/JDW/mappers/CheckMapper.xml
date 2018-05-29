@@ -73,10 +73,10 @@
         from jdw_check
         jdw_check
         <if test="stationname!=null">
-            JOIN jdw_station as st ON st.name =#{stationname} and st.id=jdw_check.station_id
+            JOIN jdw_station as st ON st.name LIKE concat('%',#{stationname},'%') and st.id=jdw_check.station_id
         </if>
         <if test="checkername!=null">
-            join jdw_checker as ck on ck.name=#{checkername} and ck.id=jdw_check.checker_id
+            join jdw_checker as ck on ck.name like concat('%',#{checkername},'%') and ck.id=jdw_check.checker_id
         </if>
         where 1=1
         <if test="startTime!=null">

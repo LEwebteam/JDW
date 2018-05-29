@@ -98,7 +98,13 @@ public class StationController {
 
     @RequestMapping("search.do")
     @ResponseBody
-    public ServerResponse<PageInfo> productSearch(HttpSession session, String stationName, Integer stationId, String stationType, String stationLevel, Integer office, Date startTime, Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse<PageInfo> productSearch(HttpSession session, @RequestParam(required = false) String stationName,
+                                                  @RequestParam(required = false)Integer stationId,
+                                                  @RequestParam(required = false)String stationType,
+                                                  @RequestParam(required = false)String stationLevel,
+                                                  @RequestParam(required = false)Integer office,
+                                                  @RequestParam(required = false)Date startTime,
+                                                  @RequestParam(required = false)Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");

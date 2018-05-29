@@ -107,12 +107,17 @@ public class CheckController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
 
         }
-        return iCheckService.selectByPrimaryKey(checkId);
+        return iCheckService.selectByPrimaryKeyWithBolgs(checkId);
     }
 
     @RequestMapping("search.do")
     @ResponseBody
-    public ServerResponse<PageInfo> productSearch(HttpSession session,@RequestParam(required = false) String stationname,@RequestParam(required = false) String checkername,@RequestParam(required = false) Date startTime,@RequestParam(required = false) Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse<PageInfo> productSearch(HttpSession session,@RequestParam(required = false) String stationname
+                                                   ,@RequestParam(required = false) String checkername,
+                                                  @RequestParam(required = false) Date startTime,
+                                                  @RequestParam(required = false) Date endTime,
+                                                  @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
        User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");

@@ -4,12 +4,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CheckMapper;
-import com.mmall.pojo.Check;
-import com.mmall.pojo.CheckWithBLOBs;
+import com.mmall.dao.CheckerMapper;
+import com.mmall.dao.ModelMapper;
+import com.mmall.dao.StationMapper;
+import com.mmall.pojo.*;
 import com.mmall.service.ICheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +23,13 @@ public class CheckServiceImpl implements ICheckService {
 
     @Autowired
     CheckMapper checkMapper;
+    @Autowired
+    CheckerMapper checkerMapper;
+    @Autowired
+    StationMapper stationMapper;
 
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public ServerResponse
@@ -34,12 +44,39 @@ public class CheckServiceImpl implements ICheckService {
     }
 
     @Override
-    public ServerResponse
-    selectByPrimaryKeyWithBolgs(Integer checkId) {
+    public ServerResponse selectByPrimaryKeyWithBolgs(Integer checkId) {
         CheckWithBLOBs check = checkMapper.selectByPrimaryKey(checkId);
+        check.setOriginalData(null);
+        check.setTransformData(null);
 
         if (check != null) {
-            return ServerResponse.createBySuccess(check);
+            List<Checker> checkerList = checkerMapper.selectAll();
+            List<Model> modelList = modelMapper.selectAll();
+            List<Station> stationList = stationMapper.selectAll();
+
+            CheckOV checkOV = new CheckOV(check);
+            for (Station station : stationList) {
+                if (station.getId() == check.getStationId()) {
+                    checkOV.stationname = station.getName();
+                    break;
+                }
+            }
+            for (Model model : modelList) {
+                if (model.getId() == check.getModelId()) {
+                    checkOV.modelname = model.getModelName();
+                    break;
+                }
+            }
+            for (Checker checker : checkerList) {
+                if (checker.getId() == check.getCheckerId()) {
+                    checkOV.checkername = checker.getName();
+                    break;
+                }
+            }
+
+            return ServerResponse.createBySuccess(checkOV);
+
+
         }
         return ServerResponse.createByErrorMessage("无信息");
     }
@@ -70,11 +107,41 @@ public class CheckServiceImpl implements ICheckService {
     public ServerResponse<PageInfo> getCheckList(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<CheckWithBLOBs> checkList = checkMapper.selectAll();
+        if (checkList.size() == 0) {
+            return ServerResponse.createBySuccess("无数据", null);
+        }
         for (CheckWithBLOBs check : checkList) {
             check.setOriginalData(null);
             check.setTransformData(null);
         }
-        PageInfo pageInfo = new PageInfo((checkList));
+        List<Checker> checkerList = checkerMapper.selectAll();
+        List<Model> modelList = modelMapper.selectAll();
+        List<Station> stationList = stationMapper.selectAll();
+
+        List<CheckOV> checkOVS = new ArrayList<>();
+        for (CheckWithBLOBs check : checkList) {
+            CheckOV checkOV = new CheckOV(check);
+            for (Station station : stationList) {
+                if (station.getId() == check.getStationId()) {
+                    checkOV.stationname = station.getName();
+                    break;
+                }
+            }
+            for (Model model : modelList) {
+                if (model.getId() == check.getModelId()) {
+                    checkOV.modelname = model.getModelName();
+                    break;
+                }
+            }
+            for (Checker checker : checkerList) {
+                if (checker.getId() == check.getCheckerId()) {
+                    checkOV.checkername = checker.getName();
+                    break;
+                }
+            }
+            checkOVS.add(checkOV);
+        }
+        PageInfo pageInfo = new PageInfo((checkOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 
@@ -96,28 +163,125 @@ public class CheckServiceImpl implements ICheckService {
     public ServerResponse<PageInfo> getCheckList(Integer officeId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<CheckWithBLOBs> checkList = checkMapper.select(officeId);
+        if (checkList.size() == 0) {
+            return ServerResponse.createBySuccess("无数据", null);
+        }
         for (CheckWithBLOBs check : checkList) {
             check.setOriginalData(null);
             check.setTransformData(null);
         }
-        PageInfo pageInfo = new PageInfo(checkList);
+        List<Checker> checkerList = checkerMapper.selectAll();
+        List<Model> modelList = modelMapper.selectAll();
+        List<Station> stationList = stationMapper.selectAll();
+
+        List<CheckOV> checkOVS = new ArrayList<>();
+        for (CheckWithBLOBs check : checkList) {
+            CheckOV checkOV = new CheckOV(check);
+            for (Station station : stationList) {
+                if (station.getId() == check.getStationId()) {
+                    checkOV.stationname = station.getName();
+                    break;
+                }
+            }
+            for (Model model : modelList) {
+                if (model.getId() == check.getModelId()) {
+                    checkOV.modelname = model.getModelName();
+                    break;
+                }
+            }
+            for (Checker checker : checkerList) {
+                if (checker.getId() == check.getCheckerId()) {
+                    checkOV.checkername = checker.getName();
+                    break;
+                }
+            }
+            checkOVS.add(checkOV);
+        }
+        PageInfo pageInfo = new PageInfo((checkOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 
     @Override
     public ServerResponse<PageInfo> searchCheck(Integer officeId, String stationname, String checkername, Date startTime, Date endTime, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CheckWithBLOBs> checkWithBLOBs = checkMapper.selectBySCO(officeId,stationname, checkername, startTime, endTime);
-        PageInfo pageInfo = new PageInfo((checkWithBLOBs));
+        List<CheckWithBLOBs> checkList = checkMapper.selectBySCO(officeId, stationname, checkername, startTime, endTime);
+        if (checkList.size() == 0) {
+            return ServerResponse.createBySuccess("无数据", null);
+        }
+        for (CheckWithBLOBs check : checkList) {
+            check.setOriginalData(null);
+            check.setTransformData(null);
+        }
+        List<Checker> checkerList = checkerMapper.selectAll();
+        List<Model> modelList = modelMapper.selectAll();
+        List<Station> stationList = stationMapper.selectAll();
 
+        List<CheckOV> checkOVS = new ArrayList<>();
+        for (CheckWithBLOBs check : checkList) {
+            CheckOV checkOV = new CheckOV(check);
+            for (Station station : stationList) {
+                if (station.getId() == check.getStationId()) {
+                    checkOV.stationname = station.getName();
+                    break;
+                }
+            }
+            for (Model model : modelList) {
+                if (model.getId() == check.getModelId()) {
+                    checkOV.modelname = model.getModelName();
+                    break;
+                }
+            }
+            for (Checker checker : checkerList) {
+                if (checker.getId() == check.getCheckerId()) {
+                    checkOV.checkername = checker.getName();
+                    break;
+                }
+            }
+            checkOVS.add(checkOV);
+        }
+        PageInfo pageInfo = new PageInfo((checkOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 
     @Override
     public ServerResponse<PageInfo> searchCheckAdmin(String stationname, String checkername, Date startTime, Date endTime, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CheckWithBLOBs> checkWithBLOBs = checkMapper.selectBySC(stationname, checkername, startTime, endTime);
-        PageInfo pageInfo = new PageInfo((checkWithBLOBs));
+        List<CheckWithBLOBs> checkList = checkMapper.selectBySC(stationname, checkername, startTime, endTime);
+        if (checkList.size() == 0) {
+            return ServerResponse.createBySuccess("无数据", null);
+        }
+        for (CheckWithBLOBs check : checkList) {
+            check.setOriginalData(null);
+            check.setTransformData(null);
+        }
+        List<Checker> checkerList = checkerMapper.selectAll();
+        List<Model> modelList = modelMapper.selectAll();
+        List<Station> stationList = stationMapper.selectAll();
+
+        List<CheckOV> checkOVS = new ArrayList<>();
+        for (CheckWithBLOBs check : checkList) {
+            CheckOV checkOV = new CheckOV(check);
+            for (Station station : stationList) {
+                if (station.getId() == check.getStationId()) {
+                    checkOV.stationname = station.getName();
+                    break;
+                }
+            }
+            for (Model model : modelList) {
+                if (model.getId() == check.getModelId()) {
+                    checkOV.modelname = model.getModelName();
+                    break;
+                }
+            }
+            for (Checker checker : checkerList) {
+                if (checker.getId() == check.getCheckerId()) {
+                    checkOV.checkername = checker.getName();
+                    break;
+                }
+            }
+            checkOVS.add(checkOV);
+        }
+        PageInfo pageInfo = new PageInfo((checkOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 

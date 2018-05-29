@@ -23,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
   jdw_station.id as id, jdw_station.code as code, jdw_station.name as name, build_time, location, level, area, type, darwing, drawing_file_name,
-    create_by.office as office, jdw_station.create_by as create_by, jdw_station.create_datetime as create_datetime, update_by, jdw_station.update_datetime as update_datetime, jdw_station.deep as deep
+    jdw_station.office as office, jdw_station.create_by as create_by, jdw_station.create_datetime as create_datetime, update_by, jdw_station.update_datetime as update_datetime, jdw_station.deep as deep
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select

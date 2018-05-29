@@ -93,7 +93,19 @@ public class StationServiceImpl implements IStationService {
     public ServerResponse<PageInfo> searchStation(String stationName, Integer stationId, String stationType, String stationLevel, Integer office, Date startTime, Date endTime, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Station> stationList = stationMapper.select(stationName, stationId, stationType, stationLevel, office, startTime, endTime);
-        PageInfo pageInfo = new PageInfo(stationList);
+        List<Company> companyList = companyMapper.selectAll();
+        List<StationOV> stationOVS = new ArrayList<>();
+        for (Station stationT : stationList) {
+            StationOV stationOV = new StationOV(stationT);
+            for (Company company : companyList) {
+                if (company.getId() == stationT.getOffice()) {
+                    stationOV.officename = company.getCompanyName();
+                    break;
+                }
+            }
+            stationOVS.add(stationOV);
+        }
+        PageInfo pageInfo = new PageInfo((stationOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 
