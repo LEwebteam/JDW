@@ -2,6 +2,7 @@ package com.mmall.dao;
 
 import com.mmall.pojo.Check;
 import com.mmall.pojo.CheckWithBLOBs;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,5 +23,5 @@ public interface CheckMapper {
 
     List<CheckWithBLOBs> selectAll();
 
-    List<CheckWithBLOBs> select(Integer stationId, Integer modelId);
-}
+    List<CheckWithBLOBs> select(@Param("officeId") Integer );
+}officeId

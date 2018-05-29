@@ -50,16 +50,16 @@ public class CheckServiceImpl implements ICheckService {
             if (check.getId() != null) {
                 int rowCount = checkMapper.updateByPrimaryKeySelective(check);
                 if (rowCount > 0) {
-                    return ServerResponse.createBySuccess("检测更新成功");
+                    return ServerResponse.createBySuccess("检测更新成功",check.getId());
                 }
-                return ServerResponse.createBySuccess("检测更新失败");
+                return ServerResponse.createByErrorMessage("保存失败");
             } else {
                 check.setId(UUID.randomUUID().hashCode());
                 int rowCount = checkMapper.insertSelective(check);
                 if (rowCount > 0) {
-                    return ServerResponse.createBySuccess("检测新增成功");
+                    return ServerResponse.createBySuccess("检测新增成功",check.getId());
                 }
-                return ServerResponse.createBySuccess("检测新增失败");
+                return ServerResponse.createByErrorMessage("保存失败");
             }
         }
 
@@ -98,9 +98,9 @@ public class CheckServiceImpl implements ICheckService {
     }
 
     @Override
-    public ServerResponse<PageInfo> getCheckList(Integer stationId, Integer modelId, int pageNum, int pageSize) {
+    public ServerResponse<PageInfo> getCheckList(Integer officeId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<CheckWithBLOBs> checkList = checkMapper.select(stationId, modelId);
+        List<CheckWithBLOBs> checkList = checkMapper.select(officeId);
         for (CheckWithBLOBs check : checkList) {
             check.setOriginalData(null);
             check.setTransformData(null);

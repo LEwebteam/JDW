@@ -201,10 +201,35 @@ public class UserServiceImpl implements IUserService {
         if(user!=null){
             user.setRole(Const.Role.ROLE_ADMIN);
             userMapper.updateByPrimaryKey(user);
-            return ServerResponse.createBySuccess("升级成为管理员成功");
+            return ServerResponse.createBySuccessMessage("升级成为管理员成功");
         }
         return ServerResponse.createByErrorMessage("升级失败-user为空");
 
+    }
+
+    @Override
+    public ServerResponse<String> canceladmin(Integer userid) {
+        if(userid==null){
+            return ServerResponse.createByErrorMessage("请输入userid");
+        }
+        User user =userMapper.selectByPrimaryKey(userid);
+        if(user!=null){
+            user.setRole(Const.Role.ROLE_CUSTOMER);
+            userMapper.updateByPrimaryKey(user);
+            return ServerResponse.createBySuccessMessage("设置成普通用户成功");
+        }
+        return ServerResponse.createByErrorMessage("设置失败-user为空");
+
+    }
+
+    @Override
+    public ServerResponse<PageInfo> getUserListByusername(int pageNum, int pageSize, String username) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> userList = userMapper.selectByUserName(username);
+//        List<OrderVo> orderVoList = this.assembleOrderVoList(orderList,null);
+        PageInfo pageResult = new PageInfo(userList);
+        pageResult.setList(userList);
+        return ServerResponse.createBySuccess(pageResult);
     }
 
     public ServerResponse<User> updateInformation(User user) {

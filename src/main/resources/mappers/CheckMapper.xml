@@ -35,7 +35,7 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    id, code, station_id, model_id, checker_id, check_time, line_method, line_detail, 
+    jdw_check.id as id, code, station_id, model_id, checker_id, check_time, line_method, line_detail,
     reference_node, current_value
   </sql>
     <sql id="Blob_Column_List">
@@ -62,14 +62,7 @@
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        from jdw_check
-        WHERE 1=1
-        <if test="stationId !=null">
-            AND station_id = #{stationId}
-        </if>
-        <if test="modelId!=null">
-            AND model_id = #{modelId}
-        </if>
+        from jdw_check JOIN jdw_station as st ON st.office =#{stationId} and st.id=jdw_check.station_id
         order by id desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

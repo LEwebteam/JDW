@@ -26,4 +26,5 @@ public interface UserMapper {
 
     List<User> selectAllUser();
 
+    List<User> selectByUserName(String username);
 }

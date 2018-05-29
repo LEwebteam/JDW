@@ -26,4 +26,6 @@ public interface ICheckerService {
     ServerResponse<PageInfo> getCheckertListBystationId(Integer stationId, int pageNum, int pageSize);
 
     ServerResponse<PageInfo> getCheckertListBymodelId(Integer modelId, int pageNum, int pageSize);
+
+    ServerResponse<PageInfo> getCheckertListByOffice(Integer officeId, int pageNum, int pageSize);
 }

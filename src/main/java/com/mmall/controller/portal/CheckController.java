@@ -85,7 +85,7 @@ public class CheckController {
 
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse getList(HttpSession session, @RequestParam(value = "stationId", required = false) Integer stationId, Integer modelId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
@@ -96,7 +96,7 @@ public class CheckController {
             return iCheckService.getCheckList(pageNum, pageSize);
         }
 
-        return iCheckService.getCheckList(stationId, modelId, pageNum, pageSize);
+        return iCheckService.getCheckList(user.getOfficeId(), pageNum, pageSize);
     }
 
     @RequestMapping("get.do")

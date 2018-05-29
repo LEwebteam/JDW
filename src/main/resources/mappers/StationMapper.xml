@@ -22,11 +22,11 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code, name, build_time, location, level, area, type, darwing, drawing_file_name, 
+    id, code, name, build_time, location, level, area, type, darwing, drawing_file_name,
     office, create_by, create_datetime, update_by, update_datetime, deep
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from jdw_station
     where id = #{id,jdbcType=INTEGER}
@@ -36,15 +36,15 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.mmall.pojo.Station" >
-    insert into jdw_station (id, code, name, 
-      build_time, location, level, 
-      area, type, darwing, drawing_file_name, 
-      office, create_by, create_datetime, 
+    insert into jdw_station (id, code, name,
+      build_time, location, level,
+      area, type, darwing, drawing_file_name,
+      office, create_by, create_datetime,
       update_by, update_datetime, deep
       )
-    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{buildTime,jdbcType=DATE}, #{location,jdbcType=VARCHAR}, #{level,jdbcType=CHAR}, 
-      #{area,jdbcType=REAL}, #{type,jdbcType=VARCHAR}, #{darwing,jdbcType=VARCHAR}, #{drawingFileName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{buildTime,jdbcType=DATE}, #{location,jdbcType=VARCHAR}, #{level,jdbcType=CHAR},
+      #{area,jdbcType=REAL}, #{type,jdbcType=VARCHAR}, #{darwing,jdbcType=VARCHAR}, #{drawingFileName,jdbcType=VARCHAR},
       #{office,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, now(),
       #{updateBy,jdbcType=VARCHAR}, now(), #{deep,jdbcType=REAL}
       )

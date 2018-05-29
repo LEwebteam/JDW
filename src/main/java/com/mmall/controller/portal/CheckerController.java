@@ -8,6 +8,7 @@ import com.mmall.pojo.Checker;
 import com.mmall.pojo.User;
 import com.mmall.service.ICheckerService;
 import com.mmall.service.IUserService;
+import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,14 +51,18 @@ public class CheckerController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
         }
-        if(stationId!=null){
-            iCheckerService.getCheckertListBystationId(stationId,pageNum,pageSize);
+        if (stationId != null) {
+            iCheckerService.getCheckertListBystationId(stationId, pageNum, pageSize);
         }
-        if(modelId!=null){
-            iCheckerService.getCheckertListBymodelId(modelId,pageNum,pageSize);
+        if (modelId != null) {
+            iCheckerService.getCheckertListBymodelId(modelId, pageNum, pageSize);
         }
-
-        return iCheckerService.getCheckertList(pageNum, pageSize);
+        if (iUserService.checkAdminRole(user).isSuccess()){
+            return iCheckerService.getCheckertList(pageNum, pageSize);
+        }
+        else {
+            return iCheckerService.getCheckertListByOffice(user.getOfficeId(),pageNum,pageSize);
+        }
     }
 
     @RequestMapping("search.do")

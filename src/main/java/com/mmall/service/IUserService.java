@@ -37,4 +37,7 @@ public interface IUserService {
     ServerResponse<String> deleteUser(Integer userId);
 
     ServerResponse<String> setadmin(Integer userid);
+    ServerResponse<String> canceladmin(Integer userid);
+
+    ServerResponse<PageInfo> getUserListByusername(int pageNum, int pageSize, String username);
 }

@@ -75,6 +75,18 @@ public class UserController {
         }
         return iUserService.setadmin(userid);
     }
+    @RequestMapping(value = "canceladmin.do")
+    @ResponseBody
+    public ServerResponse<String> canceladmin(Integer userid, HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        if (!iUserService.checkAdminRole(user).isSuccess()) {
+            return ServerResponse.createByErrorMessage("非管理员登陆");
+        }
+        return iUserService.canceladmin(userid);
+    }
 
     @RequestMapping(value = "check_valid.do")
     @ResponseBody
@@ -202,6 +214,23 @@ public class UserController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             return iUserService.getUserList(pageNum, pageSize);
+        } else {
+            return ServerResponse.createByErrorMessage("无权限操作");
+        }
+    }
+
+    @RequestMapping("listbyusername.do")
+    @ResponseBody
+    public ServerResponse<PageInfo> listbyusername(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,String username) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
+
+        }
+        if (iUserService.checkAdminRole(user).isSuccess()) {
+            return iUserService.getUserListByusername(pageNum, pageSize,username);
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }

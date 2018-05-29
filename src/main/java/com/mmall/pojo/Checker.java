@@ -42,6 +42,7 @@ public class Checker {
         this.name = name == null ? null : name.trim();
     }
 
+
     public String getSex() {
         return sex;
     }

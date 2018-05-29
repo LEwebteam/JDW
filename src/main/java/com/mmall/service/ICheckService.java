@@ -25,6 +25,6 @@ public interface ICheckService {
 
     ServerResponse deleteCheck(Integer checkId);
 
-    ServerResponse<PageInfo> getCheckList(Integer stationId,Integer modelId, int pageNum, int pageSize);
+    ServerResponse<PageInfo> getCheckList(Integer officeId, int pageNum, int pageSize);
 
 }

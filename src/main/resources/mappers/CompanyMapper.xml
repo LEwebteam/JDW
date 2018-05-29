@@ -16,6 +16,12 @@
     from jdw_company
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectAll"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM jdw_company
+    ORDER BY id DESC
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from jdw_company
     where id = #{id,jdbcType=INTEGER}

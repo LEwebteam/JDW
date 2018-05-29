@@ -24,7 +24,7 @@ public class InterceptorLogin extends HandlerInterceptorAdapter {
             //PrintWriter printWriter = httpServletResponse.getWriter();
             //printWriter.write("{code:0,message:\"session is invalid,please login again!\"}");
             //跳转登录
-            String url = "/login.do";
+            String url = "/html/login.html";
             response.sendRedirect(url);
             return false;
         }

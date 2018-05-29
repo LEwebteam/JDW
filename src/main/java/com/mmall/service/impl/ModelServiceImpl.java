@@ -3,14 +3,16 @@ package com.mmall.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
+import com.mmall.dao.CompanyMapper;
 import com.mmall.dao.ModelMapper;
-import com.mmall.pojo.Deleteinfo;
-import com.mmall.pojo.Model;
+import com.mmall.dao.StationMapper;
+import com.mmall.pojo.*;
 import com.mmall.service.IModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +24,8 @@ public class ModelServiceImpl implements IModelService {
     ModelMapper modelMapper;
 
     @Autowired
+    StationMapper stationMapper;
+    @Autowired
     DeleteInfoServiceImpl deleteInfoService;
 
     @Override
@@ -29,7 +33,15 @@ public class ModelServiceImpl implements IModelService {
     selectByPrimaryKey(Integer modelId) {
         Model model = modelMapper.selectByPrimaryKey(modelId);
         if (model != null) {
-            return ServerResponse.createBySuccess(model);
+            List<Station> stationList = stationMapper.selectAll();
+                ModelOV modelOV = new ModelOV(model);
+                for (Station station : stationList) {
+                    if (station.getId() == model.getStationId()) {
+                        modelOV.stationName = station.getName();
+                        break;
+                    }
+            }
+            return ServerResponse.createBySuccess(modelOV);
         }
         return ServerResponse.createByErrorMessage("无信息");
     }
@@ -40,9 +52,9 @@ public class ModelServiceImpl implements IModelService {
             if (model.getId() != null) {
                 int rowCount = modelMapper.updateByPrimaryKeySelective(model);
                 if (rowCount > 0) {
-                    return ServerResponse.createBySuccess("模型更新成功");
+                    return ServerResponse.createBySuccess("模型更新成功", model.getId());
                 }
-                return ServerResponse.createBySuccess("模型更新失败");
+                return ServerResponse.createByErrorMessage("保存失败");
             } else {
                 Integer modelId = UUID.randomUUID().hashCode();
                 model.setId(modelId);
@@ -60,8 +72,8 @@ public class ModelServiceImpl implements IModelService {
                 }
 
                 if (rowCount > 0)
-                    return ServerResponse.createBySuccess("模型新增成功");
-                return ServerResponse.createBySuccess("模型新增失败");
+                    return ServerResponse.createBySuccess("新增成功", model.getId());
+                return ServerResponse.createByErrorMessage("保存失败");
             }
         }
 
@@ -72,7 +84,19 @@ public class ModelServiceImpl implements IModelService {
     public ServerResponse<PageInfo> getModelList(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Model> modelList = modelMapper.selectAll();
-        PageInfo pageInfo = new PageInfo((modelList));
+        List<Station> stationList = stationMapper.selectAll();
+        List<ModelOV> modelOVS = new ArrayList<>();
+        for (Model model : modelList) {
+            ModelOV modelOV = new ModelOV(model);
+            for (Station station : stationList) {
+                if (station.getId() == model.getStationId()) {
+                    modelOV.stationName = station.getName();
+                    break;
+                }
+            }
+            modelOVS.add(modelOV);
+        }
+        PageInfo pageInfo = new PageInfo((modelOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 
@@ -102,7 +126,19 @@ public class ModelServiceImpl implements IModelService {
     public ServerResponse<PageInfo> getModelListBystation(Integer stationId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Model> modelList = modelMapper.selectByStationId(stationId);
-        PageInfo pageInfo = new PageInfo(modelList);
+        List<Station> stationList = stationMapper.selectAll();
+        List<ModelOV> modelOVS = new ArrayList<>();
+        for (Model model : modelList) {
+            ModelOV modelOV = new ModelOV(model);
+            for (Station station : stationList) {
+                if (station.getId() == model.getStationId()) {
+                    modelOV.stationName = station.getName();
+                    break;
+                }
+            }
+            modelOVS.add(modelOV);
+        }
+        PageInfo pageInfo = new PageInfo((modelOVS));
         return ServerResponse.createBySuccess(pageInfo);
     }
 
