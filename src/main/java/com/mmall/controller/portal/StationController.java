@@ -61,10 +61,23 @@ public class StationController {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-
         }
         return iStationService.selectByPrimaryKey(stationId);
+    }
 
+    @RequestMapping("getAll.do")
+    @ResponseBody
+    public ServerResponse getall(HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
+        }
+        if(iUserService.checkAdminRole(user).isSuccess()){
+            return iStationService.getAll();
+        }
+        else{
+            return iStationService.getAllByOffice(user.getOfficeId());
+        }
     }
 
     @RequestMapping("list.do")

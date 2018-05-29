@@ -112,20 +112,18 @@ public class CheckController {
 
     @RequestMapping("search.do")
     @ResponseBody
-    public ServerResponse<PageInfo> productSearch(HttpSession session, String checkName, Integer checkId, String checkType, String checkLevel, Integer office, Date startTime, Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-   /*     User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<PageInfo> productSearch(HttpSession session,@RequestParam(required = false) String stationname,@RequestParam(required = false) String checkername,@RequestParam(required = false) Date startTime,@RequestParam(required = false) Date endTime, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+       User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
 
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
-            return iCheckService.searchCheck(checkName, checkId, checkType, checkLevel, office, startTime, endTime, pageNum, pageSize);
+            return iCheckService.searchCheckAdmin(stationname,checkername, startTime, endTime, pageNum, pageSize);
         } else {
-            office = user.getOfficeId();
-            return iCheckService.searchCheck(checkName, checkId, checkType, checkLevel, office, startTime, endTime, pageNum, pageSize);
-        }*/
-        return null;
+            return iCheckService.searchCheck(user.getOfficeId(),stationname,checkername, startTime, endTime, pageNum, pageSize);
+        }
     }
 
     @RequestMapping(value = "upload.do", method = RequestMethod.POST)

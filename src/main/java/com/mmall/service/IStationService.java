@@ -28,4 +28,8 @@ public interface IStationService {
     ServerResponse<PageInfo> getStationtList(Integer officeId, int pageNum, int pageSize);
 
     ServerResponse<String> getDrawing(Integer stationId, HttpServletRequest request);
+
+    ServerResponse getAll();
+
+    ServerResponse getAllByOffice(Integer officeId);
 }

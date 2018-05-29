@@ -50,14 +50,14 @@ public class CheckServiceImpl implements ICheckService {
             if (check.getId() != null) {
                 int rowCount = checkMapper.updateByPrimaryKeySelective(check);
                 if (rowCount > 0) {
-                    return ServerResponse.createBySuccess("检测更新成功",check.getId());
+                    return ServerResponse.createBySuccess("检测更新成功", check.getId());
                 }
                 return ServerResponse.createByErrorMessage("保存失败");
             } else {
                 check.setId(UUID.randomUUID().hashCode());
                 int rowCount = checkMapper.insertSelective(check);
                 if (rowCount > 0) {
-                    return ServerResponse.createBySuccess("检测新增成功",check.getId());
+                    return ServerResponse.createBySuccess("检测新增成功", check.getId());
                 }
                 return ServerResponse.createByErrorMessage("保存失败");
             }
@@ -76,11 +76,6 @@ public class CheckServiceImpl implements ICheckService {
         }
         PageInfo pageInfo = new PageInfo((checkList));
         return ServerResponse.createBySuccess(pageInfo);
-    }
-
-    @Override
-    public ServerResponse<PageInfo> searchCheck(String stationName, Integer stationId, String modelId, Integer checkerId, Date startTime, Date endTime, int pageNum, int pageSize) {
-        return null;
     }
 
 
@@ -106,6 +101,23 @@ public class CheckServiceImpl implements ICheckService {
             check.setTransformData(null);
         }
         PageInfo pageInfo = new PageInfo(checkList);
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
+    @Override
+    public ServerResponse<PageInfo> searchCheck(Integer officeId, String stationname, String checkername, Date startTime, Date endTime, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CheckWithBLOBs> checkWithBLOBs = checkMapper.selectBySCO(officeId,stationname, checkername, startTime, endTime);
+        PageInfo pageInfo = new PageInfo((checkWithBLOBs));
+
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
+    @Override
+    public ServerResponse<PageInfo> searchCheckAdmin(String stationname, String checkername, Date startTime, Date endTime, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CheckWithBLOBs> checkWithBLOBs = checkMapper.selectBySC(stationname, checkername, startTime, endTime);
+        PageInfo pageInfo = new PageInfo((checkWithBLOBs));
         return ServerResponse.createBySuccess(pageInfo);
     }
 

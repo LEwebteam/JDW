@@ -4,6 +4,7 @@ import com.mmall.pojo.Check;
 import com.mmall.pojo.CheckWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CheckMapper {
@@ -24,4 +25,8 @@ public interface CheckMapper {
     List<CheckWithBLOBs> selectAll();
 
     List<CheckWithBLOBs> select(@Param("officeId") Integer officeId);
+
+    List<CheckWithBLOBs> selectBySC(@Param("stationname") String stationname, @Param("checkername") String checkername, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
+    List<CheckWithBLOBs> selectBySCO(@Param("officeId") Integer officeId,@Param("stationname") String stationname, @Param("checkername") String checkername, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

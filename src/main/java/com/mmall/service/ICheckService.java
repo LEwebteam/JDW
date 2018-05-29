@@ -21,10 +21,11 @@ public interface ICheckService {
 
     ServerResponse<PageInfo> getCheckList(int pageNum, int pageSize);
 
-    ServerResponse<PageInfo> searchCheck(String stationName, Integer stationId, String modelId, Integer checkerId, Date startTime, Date endTime, int pageNum, int pageSize);
+    ServerResponse<PageInfo> searchCheck(Integer officeId, String  stationname, String checkername,Date startTime,Date endTime, int pageNum, int pageSize);
 
     ServerResponse deleteCheck(Integer checkId);
 
     ServerResponse<PageInfo> getCheckList(Integer officeId, int pageNum, int pageSize);
 
+    ServerResponse<PageInfo> searchCheckAdmin(String stationname, String checkername, Date startTime, Date endTime, int pageNum, int pageSize);
 }

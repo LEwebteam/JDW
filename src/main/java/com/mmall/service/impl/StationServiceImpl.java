@@ -143,4 +143,14 @@ public class StationServiceImpl implements IStationService {
 
         return ServerResponse.createBySuccess(url);
     }
+
+    @Override
+    public ServerResponse getAll() {
+        return ServerResponse.createBySuccess(stationMapper.selectAll());
+    }
+
+    @Override
+    public ServerResponse getAllByOffice(Integer officeId) {
+        return ServerResponse.createBySuccess(stationMapper.selectByOfficeId(officeId));
+    }
 }
