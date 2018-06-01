@@ -33,7 +33,7 @@
         FROM jdw_checker
         WHERE 1=1
         <if test="checkerName!=null">
-            AND name=#{checkerName}
+            AND name like    concat('%',#{checkerName},'%')
         </if>
         <if test="office!=null">
             and office=#{office}
