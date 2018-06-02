@@ -9,6 +9,8 @@ import com.mmall.dao.ModelMapper;
 import com.mmall.dao.StationMapper;
 import com.mmall.pojo.*;
 import com.mmall.service.ICheckService;
+import com.mmall.util.DateTimeUtil;
+import com.mmall.util.MyUUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -74,6 +76,7 @@ public class CheckServiceImpl implements ICheckService {
                 }
             }
 
+            checkOV.checkTimeString= DateTimeUtil.dateToStr(checkOV.getCheckTime());
             return ServerResponse.createBySuccess(checkOV);
 
 
@@ -91,7 +94,8 @@ public class CheckServiceImpl implements ICheckService {
                 }
                 return ServerResponse.createByErrorMessage("保存失败");
             } else {
-                check.setId(UUID.randomUUID().hashCode());
+//                check.setId((int) MyUUIDUtil.getUUIDLong());
+                check.setId((int) (Math.abs(UUID.randomUUID().hashCode())));
                 int rowCount = checkMapper.insertSelective(check);
                 if (rowCount > 0) {
                     return ServerResponse.createBySuccess("检测新增成功", check.getId());
@@ -139,6 +143,7 @@ public class CheckServiceImpl implements ICheckService {
                     break;
                 }
             }
+            checkOV.checkTimeString=DateTimeUtil.dateToStr(checkOV.getCheckTime());
             checkOVS.add(checkOV);
         }
         PageInfo pageInfo = new PageInfo((checkOVS));
@@ -195,6 +200,7 @@ public class CheckServiceImpl implements ICheckService {
                     break;
                 }
             }
+            checkOV.checkTimeString=DateTimeUtil.dateToStr(checkOV.getCheckTime());
             checkOVS.add(checkOV);
         }
         PageInfo pageInfo = new PageInfo((checkOVS));
@@ -237,6 +243,7 @@ public class CheckServiceImpl implements ICheckService {
                     break;
                 }
             }
+            checkOV.checkTimeString=DateTimeUtil.dateToStr(checkOV.getCheckTime());
             checkOVS.add(checkOV);
         }
         PageInfo pageInfo = new PageInfo((checkOVS));
@@ -279,6 +286,7 @@ public class CheckServiceImpl implements ICheckService {
                     break;
                 }
             }
+            checkOV.checkTimeString=DateTimeUtil.dateToStr(checkOV.getCheckTime());
             checkOVS.add(checkOV);
         }
         PageInfo pageInfo = new PageInfo((checkOVS));

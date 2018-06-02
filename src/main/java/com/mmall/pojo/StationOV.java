@@ -4,6 +4,7 @@ import java.sql.Statement;
 
 public class StationOV extends Station {
     public String officename;
+    public String bulidTimeString;
 
     public StationOV(Station station) {
         this.setOffice(station.getOffice());

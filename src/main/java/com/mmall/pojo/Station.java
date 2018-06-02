@@ -1,5 +1,7 @@
 package com.mmall.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Station {
@@ -9,6 +11,7 @@ public class Station {
 
     private String name;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date buildTime;
 
     private String location;
