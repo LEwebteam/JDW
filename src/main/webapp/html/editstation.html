@@ -19,14 +19,14 @@
 				<a href="#" onclick="window.location.reload()" class="refresh"><img src="../img/refresh.png">刷新</a>
 				<a href="#" onclick="history.back(-1)" class="goback"><img src="../img/back.png">上一页</a>
 			</div>
-			<form action="/stationmanage.do" method="get">
+			<form action="/save.do" method="get">
 			<div class="infor-edit-content">
 				<table>
 					<tr>
 						<td colspan="1" width="80px">变电站名</td>
-						<td colspan="1" width="160px"><input type="text" name="" value="沙坪坝站"></td>
+						<td colspan="1" width="160px"><input type="text" name="name" value="沙坪坝站"></td>
 						<td colspan="1" width="80px">面积</td>
-						<td colspan="1" width="160px"><input type="text" name="" value="234.5"></td>
+						<td colspan="1" width="160px"><input type="text" name="deep" value="234.5"></td>
 					</tr>
 					<tr>
 						<td colspan="1">变电站类型</td>
@@ -40,7 +40,7 @@
 					</tr>
 					<tr>
 						<td colspan="1">所属局</td>
-						<td colspan="1"><select name="" value="沙坪坝">
+						<td colspan="1"><select name="office" value="1">
 							<option>1</option>
 						</select></td>
 						<td colspan="1">修建时间</td>

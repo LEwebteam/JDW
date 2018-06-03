@@ -8,6 +8,7 @@ import com.mmall.dao.ModelMapper;
 import com.mmall.dao.StationMapper;
 import com.mmall.pojo.*;
 import com.mmall.service.IModelService;
+import com.mmall.util.MyUUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,8 @@ public class ModelServiceImpl implements IModelService {
                 }
                 return ServerResponse.createByErrorMessage("保存失败");
             } else {
-                Integer modelId = UUID.randomUUID().hashCode();
+//                Integer modelId= (int)(MyUUIDUtil.getUUIDLong());
+                Integer modelId = Math.abs(UUID.randomUUID().hashCode());
                 model.setId(modelId);
                 int rowCount = modelMapper.insertSelective(model);
                 for (String s : deletiInfo.split(";")) {

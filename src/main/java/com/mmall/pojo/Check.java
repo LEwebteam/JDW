@@ -1,5 +1,7 @@
 package com.mmall.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Check {
@@ -13,6 +15,7 @@ public class Check {
 
     private Integer checkerId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date checkTime;
 
     private String lineMethod;

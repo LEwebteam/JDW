@@ -6,6 +6,7 @@ public class CheckOV extends CheckWithBLOBs {
     public String stationname;
     public String modelname;
     public String checkername;
+    public String checkTimeString;
 
     public CheckOV(CheckWithBLOBs check) {
         this.setId(check.getId());

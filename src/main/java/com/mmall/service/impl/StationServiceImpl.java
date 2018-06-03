@@ -10,6 +10,8 @@ import com.mmall.pojo.Company;
 import com.mmall.pojo.Station;
 import com.mmall.pojo.StationOV;
 import com.mmall.service.IStationService;
+import com.mmall.util.DateTimeUtil;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,7 @@ public class StationServiceImpl implements IStationService {
                     break;
                 }
             }
+            stationOV.bulidTimeString = DateTimeUtil.dateToStr(stationOV.getBuildTime());
             return ServerResponse.createBySuccess(stationOV);
         }
         return ServerResponse.createByErrorMessage("无信息");
@@ -83,6 +86,7 @@ public class StationServiceImpl implements IStationService {
                     break;
                 }
             }
+            stationOV.bulidTimeString = DateTimeUtil.dateToStr(stationOV.getBuildTime());
             stationOVS.add(stationOV);
         }
         PageInfo pageInfo = new PageInfo((stationOVS));
@@ -103,6 +107,7 @@ public class StationServiceImpl implements IStationService {
                     break;
                 }
             }
+            stationOV.bulidTimeString = DateTimeUtil.dateToStr(stationOV.getBuildTime());
             stationOVS.add(stationOV);
         }
         PageInfo pageInfo = new PageInfo((stationOVS));
@@ -134,6 +139,7 @@ public class StationServiceImpl implements IStationService {
                     break;
                 }
             }
+            stationOV.bulidTimeString = DateTimeUtil.dateToStr(stationOV.getBuildTime());
             stationOVS.add(stationOV);
         }
         PageInfo pageInfo = new PageInfo((stationOVS));
