@@ -151,7 +151,7 @@ public class StationServiceImpl implements IStationService {
         if (StringUtils.isEmpty(targetFileName)) {
             return ServerResponse.createBySuccess("没有图纸");
         }
-        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/upload/" + targetFileName;
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/JDW/upload/" + targetFileName;
 
         return ServerResponse.createBySuccess(url);
     }

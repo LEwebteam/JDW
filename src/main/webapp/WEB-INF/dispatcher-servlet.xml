@@ -48,7 +48,8 @@
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/login.do"/>
             <mvc:exclude-mapping path="/user/login.do"/>
-            <!--<mvc:exclude-mapping path="/html/login.html"/>-->
+            <mvc:exclude-mapping path="/html/login.html"/>
+            <mvc:exclude-mapping path="http://localhost:8080/JDW/html/login.html"/>
             <bean class="com.mmall.controller.InterceptorLogin"/>
         </mvc:interceptor>
     </mvc:interceptors>
