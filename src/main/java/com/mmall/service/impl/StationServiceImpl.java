@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -55,15 +56,26 @@ public class StationServiceImpl implements IStationService {
     public ServerResponse saveOrUpdateStation(Station station) {
         if (station != null) {
             if (station.getId() != null) {
-                int rowCount = stationMapper.updateByPrimaryKey(station);
+                int rowCount = 0;
+                try {
+                    rowCount = stationMapper.insert(station);
+                }catch (Exception e){
+                    return ServerResponse.createByErrorMessage("新增失败，所属局不存在");
+                }
                 if (rowCount > 0) {
                     return ServerResponse.createBySuccessMessage("站点更新成功");
                 }
                 return ServerResponse.createByErrorMessage("保存失败");
             } else {
-                int rowCount = stationMapper.insert(station);
+                station.setId(Math.abs(UUID.randomUUID().hashCode()));
+                int rowCount = 0;
+                try {
+                    rowCount = stationMapper.insert(station);
+                }catch (Exception e){
+                    return ServerResponse.createByErrorMessage("新增失败，所属局不存在");
+                }
                 if (rowCount > 0) {
-                    return ServerResponse.createBySuccessMessage("站点新增成功");
+                    return ServerResponse.createBySuccess("站点新增成功",station.getId());
                 }
                 return ServerResponse.createByErrorMessage("保存失败");
             }

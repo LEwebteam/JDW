@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService {
         try {
             user = userMapper.selectLogin(username, md5Password);
         } catch (Exception e) {
-            log.error("用户和密码检验:{}",e);
+            log.error("用户和密码检验:{}", e);
             return ServerResponse.createByErrorMessage("密码错误");
         }
         if (user == null) {
@@ -63,7 +63,12 @@ public class UserServiceImpl implements IUserService {
         user.setRole(Const.Role.ROLE_CUSTOMER);
         //MD5加密
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
-        int resultCount = userMapper.insert(user);
+        int resultCount = 0;
+        try {
+            resultCount = userMapper.insert(user);
+        } catch (Exception e) {
+            return ServerResponse.createByErrorMessage("新增失败，所属局不存在");
+        }
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("新增失败");
         }
@@ -186,19 +191,19 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServerResponse<String> deleteUser(Integer userId) {
         int count = userMapper.deleteByPrimaryKey(userId);
-        if(count>=1)
-        return ServerResponse.createBySuccessMessage("删除成功");
+        if (count >= 1)
+            return ServerResponse.createBySuccessMessage("删除成功");
         else
             return ServerResponse.createByErrorMessage("删除失败");
     }
 
     @Override
     public ServerResponse<String> setadmin(Integer userid) {
-        if(userid==null){
+        if (userid == null) {
             return ServerResponse.createByErrorMessage("请输入userid");
         }
-        User user =userMapper.selectByPrimaryKey(userid);
-        if(user!=null){
+        User user = userMapper.selectByPrimaryKey(userid);
+        if (user != null) {
             user.setRole(Const.Role.ROLE_ADMIN);
             userMapper.updateByPrimaryKey(user);
             return ServerResponse.createBySuccessMessage("升级成为管理员成功");
@@ -209,11 +214,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse<String> canceladmin(Integer userid) {
-        if(userid==null){
+        if (userid == null) {
             return ServerResponse.createByErrorMessage("请输入userid");
         }
-        User user =userMapper.selectByPrimaryKey(userid);
-        if(user!=null){
+        User user = userMapper.selectByPrimaryKey(userid);
+        if (user != null) {
             user.setRole(Const.Role.ROLE_CUSTOMER);
             userMapper.updateByPrimaryKey(user);
             return ServerResponse.createBySuccessMessage("设置成普通用户成功");

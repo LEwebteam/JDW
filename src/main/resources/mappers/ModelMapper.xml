@@ -46,6 +46,11 @@
         order by id desc
 
     </select>
+    <select id="getModelName" resultType="java.lang.String">
+        select
+        distinct model_name from
+        jdw_model
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from jdw_model
     where id = #{id,jdbcType=INTEGER}

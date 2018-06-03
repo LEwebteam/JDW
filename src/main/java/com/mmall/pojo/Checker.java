@@ -7,13 +7,13 @@ public class Checker {
 
     private String sex;
 
-    private Integer office;
+        private String office;
 
     private String level;
 
     private String phonenum;
 
-    public Checker(Integer id, String name, String sex, Integer office, String level, String phonenum) {
+    public Checker(Integer id, String name, String sex, String office, String level, String phonenum) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -51,11 +51,11 @@ public class Checker {
         this.sex = sex == null ? null : sex.trim();
     }
 
-    public Integer getOffice() {
+    public String  getOffice() {
         return office;
     }
 
-    public void setOffice(Integer office) {
+    public void setOffice(String  office) {
         this.office = office;
     }
 

@@ -38,7 +38,7 @@ public class CheckerController {
             return iCheckerService.saveOrUpdateChecker(checker);
         } else {
             //不是管理员则设置officeid
-            checker.setOffice(user.getOfficeId());
+//            checker.setOffice(user.getOfficeId());
             return iCheckerService.saveOrUpdateChecker(checker);
         }
     }
@@ -57,12 +57,14 @@ public class CheckerController {
         if (modelId != null) {
             iCheckerService.getCheckertListBymodelId(modelId, pageNum, pageSize);
         }
-        if (iUserService.checkAdminRole(user).isSuccess()){
+ /*       if (iUserService.checkAdminRole(user).isSuccess()){
             return iCheckerService.getCheckertList(pageNum, pageSize);
         }
         else {
             return iCheckerService.getCheckertListByOffice(user.getOfficeId(),pageNum,pageSize);
-        }
+        }*/
+        return iCheckerService.getCheckertList(pageNum, pageSize);
+
     }
 
     @RequestMapping("search.do")
@@ -77,7 +79,7 @@ public class CheckerController {
             //填充业务
             return iCheckerService.searchChecker(checkerName, office, pageNum, pageSize);
         } else {
-            office = user.getOfficeId();
+//            office = user.getOfficeId();
             return iCheckerService.searchChecker(checkerName, office, pageNum, pageSize);
         }
     }
@@ -101,7 +103,7 @@ public class CheckerController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
         }
-        if (iUserService.checkAdminRole(user).isSuccess()) {
+     /*   if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
             return iCheckerService.deleteChecker(checkerId);
         } else {
@@ -115,8 +117,10 @@ public class CheckerController {
 
                 }
             }
-        }
-        return ServerResponse.createByErrorMessage("删除失败");
+        }*/
+        return iCheckerService.deleteChecker(checkerId);
+
+//        return ServerResponse.createByErrorMessage("删除失败");
 
     }
 

@@ -25,10 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by geely
@@ -50,7 +47,7 @@ public class ModelController {
 
     @RequestMapping("save.do")
     @ResponseBody
-    public ServerResponse productSave(HttpSession session, Model model,String deletiInfo) {
+    public ServerResponse productSave(HttpSession session, Model model, String deletiInfo) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
@@ -88,7 +85,16 @@ public class ModelController {
                 return ServerResponse.createByErrorMessage("");
             }
         }
-        ServerResponse serverResponse=iModelService.saveOrUpdateModel(model,deletiInfo);
+
+        List<String> modelNameList = iModelService.getmmodellName();
+
+        for (String modelName : modelNameList) {
+            if (modelName.equals(model.getModelName())) {
+                return ServerResponse.createByErrorMessage("模型名称已存在");
+            }
+        }
+
+        ServerResponse serverResponse = iModelService.saveOrUpdateModel(model, deletiInfo);
 
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //管理员直接添加---office是否固定选项？
@@ -124,7 +130,7 @@ public class ModelController {
 
     @RequestMapping("get.do")
     @ResponseBody
-    public ServerResponse getByid(HttpSession session, @RequestParam(required = true) Integer modelId){
+    public ServerResponse getByid(HttpSession session, @RequestParam(required = true) Integer modelId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");

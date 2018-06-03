@@ -2,8 +2,10 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 <classPathEntry
-        location="C:\Users\supremejin\Downloads\度盘下载器2.3.1\java企业级电商项目架构redis和tomcat\慕课\Java企业级电商项目架构演进之路  Tomcat集群与Redis分布式\一期+二期资料\一期+二期资料\mmallv1.0 - tomcat2\mmall-tomcat2\src\main\tools\mysql-connector-java-5.1.6-bin.jar"/>
-<context id="context1" targetRuntime="MyBatis3">
+        location="D:\JDW\src\main\tools\mysql-connector-java-5.1.6-bin.jar"/>
+
+    <!--location="C:\Users\supremejin\Downloads\度盘下载器2.3.1\java企业级电商项目架构redis和tomcat\慕课\Java企业级电商项目架构演进之路  Tomcat集群与Redis分布式\一期+二期资料\一期+二期资料\mmallv1.0 - tomcat2\mmall-tomcat2\src\main\tools\mysql-connector-java-5.1.6-bin.jar"/>-->
+    <context id="context1" targetRuntime="MyBatis3">
 
     <commentGenerator>
         <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -112,7 +114,7 @@
            enableCountByExample="false" enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false"
            selectByExampleQueryId="false"></table>-->
-    <table tableName="jdw_level" domainObjectName="Level"
+    <table tableName="jdw_user" domainObjectName="UUUUUUUUU"
            enableCountByExample="false" enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false"
            selectByExampleQueryId="false"></table>

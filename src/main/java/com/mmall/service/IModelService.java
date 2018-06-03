@@ -6,6 +6,7 @@ import com.mmall.pojo.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by geely
@@ -29,4 +30,6 @@ public interface IModelService {
     ServerResponse<PageInfo> getModelListBystation(Integer stationId, int pageNum, int pageSize);
 
     ServerResponse<String> getDrawing(Integer stationId, HttpServletRequest request);
+
+    List<String> getmmodellName();
 }

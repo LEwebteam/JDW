@@ -35,12 +35,12 @@ public class ModelServiceImpl implements IModelService {
         Model model = modelMapper.selectByPrimaryKey(modelId);
         if (model != null) {
             List<Station> stationList = stationMapper.selectAll();
-                ModelOV modelOV = new ModelOV(model);
-                for (Station station : stationList) {
-                    if (station.getId() == model.getStationId()) {
-                        modelOV.stationName = station.getName();
-                        break;
-                    }
+            ModelOV modelOV = new ModelOV(model);
+            for (Station station : stationList) {
+                if (station.getId() == model.getStationId()) {
+                    modelOV.stationName = station.getName();
+                    break;
+                }
             }
             return ServerResponse.createBySuccess(modelOV);
         }
@@ -147,6 +147,11 @@ public class ModelServiceImpl implements IModelService {
     @Override
     public ServerResponse<String> getDrawing(Integer modelId, HttpServletRequest request) {
         return null;
+    }
+
+    @Override
+    public List<String> getmmodellName() {
+        return modelMapper.getModelName();
     }
 }
 

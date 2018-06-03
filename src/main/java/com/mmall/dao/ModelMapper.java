@@ -20,4 +20,6 @@ public interface ModelMapper {
     List<Model> selectAll();
 
     List<Model> selectByStationId(Integer stationId);
+
+    List<String> getModelName();
 }

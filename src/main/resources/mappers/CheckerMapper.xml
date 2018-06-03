@@ -6,7 +6,7 @@
             <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
             <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="sex" jdbcType="CHAR" javaType="java.lang.String"/>
-            <arg column="office" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="office" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="level" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="phonenum" jdbcType="VARCHAR" javaType="java.lang.String"/>
         </constructor>
@@ -74,7 +74,7 @@
     <insert id="insert" parameterType="com.mmall.pojo.Checker">
     insert into jdw_checker (id, name, sex, office, 
       level, phonenum)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{office,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{office,jdbcType=VARCHAR},
       #{level,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.mmall.pojo.Checker">
@@ -130,7 +130,7 @@
                 sex = #{sex,jdbcType=CHAR},
             </if>
             <if test="office != null">
-                office = #{office,jdbcType=INTEGER},
+                office = #{office,jdbcType=VARCHAR},
             </if>
             <if test="level != null">
                 level = #{level,jdbcType=VARCHAR},
@@ -145,7 +145,7 @@
     update jdw_checker
     set name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=CHAR},
-      office = #{office,jdbcType=INTEGER},
+      office = #{office,jdbcType=VARCHAR},
       level = #{level,jdbcType=VARCHAR},
       phonenum = #{phonenum,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
